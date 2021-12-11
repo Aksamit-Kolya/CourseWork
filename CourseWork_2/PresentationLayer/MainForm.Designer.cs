@@ -50,6 +50,9 @@ namespace CourseWork_2
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewFileExplorer = new System.Windows.Forms.TreeView();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,13 +64,14 @@ namespace CourseWork_2
             this.lengthColumn,
             this.dateColumn});
             this.fileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.fileExplorer.FullRowSelect = true;
             this.fileExplorer.GridLines = true;
             this.fileExplorer.HideSelection = false;
             this.fileExplorer.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.fileExplorer.Location = new System.Drawing.Point(310, 87);
+            this.fileExplorer.Location = new System.Drawing.Point(310, 109);
             this.fileExplorer.Name = "fileExplorer";
-            this.fileExplorer.Size = new System.Drawing.Size(743, 489);
+            this.fileExplorer.Size = new System.Drawing.Size(743, 467);
             this.fileExplorer.TabIndex = 0;
             this.fileExplorer.UseCompatibleStateImageBehavior = false;
             this.fileExplorer.View = System.Windows.Forms.View.Details;
@@ -130,7 +134,7 @@ namespace CourseWork_2
             // treeViewFileExplorer
             // 
             this.treeViewFileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 88);
+            this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 81);
             this.treeViewFileExplorer.Name = "treeViewFileExplorer";
             treeNode1.Name = "Node6";
             treeNode1.Text = "abacaba";
@@ -148,22 +152,46 @@ namespace CourseWork_2
             treeNode3,
             treeNode5,
             treeNode6});
-            this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 488);
+            this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 495);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
             this.treeViewFileExplorer.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterSelect);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(105, 28);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(311, 81);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(742, 22);
+            this.textBox1.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1145, 713);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.treeViewFileExplorer);
             this.Controls.Add(this.fileExplorer);
             this.Name = "Form1";
             this.Text = "Form1";
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -179,6 +207,9 @@ namespace CourseWork_2
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.TreeView treeViewFileExplorer;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
 

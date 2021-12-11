@@ -1,6 +1,7 @@
 ﻿using CourseWork_2.DataLayer;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -107,10 +108,18 @@ namespace CourseWork_2.BusinessLayer
             return dbManager.GetImagesForFileExplorer(fileExplorer);
         }
 
+        public ImageList GetImageForDrivers()
+        {
+            ImageList imageList = new ImageList();
+            imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Drive-Local-icon.png"));
+            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
+            imageList.ImageSize = new Size(45, 45);
+            return imageList;
+        }
         public List<ListViewItem> GetFileRecords(string directoryPath)
         {
             List<ListViewItem> items = new List<ListViewItem>();
-            if (directoryPath.Length > 3)
+            if (true/*directoryPath.Length > 3*/)
             {
                 DirectoryInfo dirInfo = new DirectoryInfo(directoryPath);
 
@@ -142,6 +151,20 @@ namespace CourseWork_2.BusinessLayer
             }
 
             return items;
+        }
+
+        public List<ListViewItem> GetLogicalDiskRecords()
+        {
+            List<ListViewItem> listViewItems = new List<ListViewItem>();
+
+            foreach(string driveName in Directory.GetLogicalDrives())
+            {
+                DriveInfo driveInfo = new DriveInfo(driveName);
+                ListViewItem listViewItem = new ListViewItem(driveInfo.Name);
+                listViewItems.Add(listViewItem);
+            }
+
+            return listViewItems;
         }
 
         public string GetFullPathForNode(TreeNode node)
