@@ -21,8 +21,18 @@ namespace CourseWork_2
         public Form1()
         {
             InitializeComponent();
-            //ShowFiles(@"C:\");
+            //Directory.Delete(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\asddsa", true);
+            /*            Business.CopyFilesRecursively(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test"
+                                                    , @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
+/*            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
+                @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
+            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
+                              @"d:\");
 
+            /*Business.MoveDirectory(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
+                @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
+            /*            Business.MoveDirectory(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
+                            @"d:\");*/
 
             ShowLogicalDrives();
             Monitor.CreateWatcher(@"C:\");

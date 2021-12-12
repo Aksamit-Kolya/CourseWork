@@ -171,5 +171,110 @@ namespace CourseWork_2.BusinessLayer
         {
             return node.FullPath[12] + ":" + node.FullPath.Substring(15);
         }
+
+
+        private bool DeleteDirectory(string filePath)
+        {
+            try
+            {
+                Directory.Delete(filePath, true);
+                return true;
+            }
+            catch(Exception e)
+            {
+                return false;
+            }
+        }
+        private bool DeleteFile(string filePath)
+        {
+            try
+            {
+                File.Delete(filePath);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
+
+
+        public bool MoveFile(string oldPath, string newPath)
+        {
+            try
+            {
+                File.Move(oldPath, newPath);
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
+
+        public bool MoveDirectory(string oldPath, string newPath)
+        {
+            if (newPath.Contains(oldPath)) return false;
+            else
+            {
+                CopyAll(oldPath, newPath);
+                DeleteDirectory(oldPath);
+                return true;
+            }
+        }
+
+
+        public bool CopyFile(string filePath, string newFilePath)
+        {
+            try
+            {
+                File.Copy(filePath, newFilePath);
+                return true;
+            }catch(Exception e)
+            {
+                return false;
+            }
+        }
+        public static void CopyAll(string sourceDirectory, string targetDirectory)
+        {
+            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+            Directory.CreateDirectory(targetDirectory + "\\" + diSource.Name);
+            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
+
+            CopyAll(diSource, diTarget);
+        }
+        private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        {
+            Directory.CreateDirectory(target.FullName);
+
+            // Copy each file into the new directory.
+            foreach (FileInfo fi in source.GetFiles())
+            {
+                //Console.WriteLine(@"Copying {0}\{1}", target.FullName, fi.Name);
+                fi.CopyTo(Path.Combine(target.FullName, fi.Name), true);
+            }
+
+            // Copy each subdirectory using recursion.
+            foreach (DirectoryInfo diSourceSubDir in source.GetDirectories())
+            {
+                DirectoryInfo nextTargetSubDir =
+                    target.CreateSubdirectory(diSourceSubDir.Name);
+                CopyAll(diSourceSubDir, nextTargetSubDir);
+            }
+        }
+        public static void CopyFilesRecursively(string sourcePath, string targetPath)
+        {
+            //Now Create all of the directories
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            {
+                Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
+            }
+
+            //Copy all the files & Replaces any files with the same name
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            {
+                File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+            }
+        }
     }
 }
