@@ -51,8 +51,10 @@ namespace CourseWork_2
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewFileExplorer = new System.Windows.Forms.TreeView();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.button1 = new System.Windows.Forms.Button();
+            this.copyButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.moveButton = new System.Windows.Forms.Button();
+            this.dleteButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +78,7 @@ namespace CourseWork_2
             this.fileExplorer.UseCompatibleStateImageBehavior = false;
             this.fileExplorer.View = System.Windows.Forms.View.Details;
             this.fileExplorer.DoubleClick += new System.EventHandler(this.fileExplorer_DoubleClick);
+            this.fileExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fileExplorer_MouseClick);
             this.fileExplorer.MouseDown += new System.Windows.Forms.MouseEventHandler(this.fileExplorer_MouseDown);
             this.fileExplorer.MouseUp += new System.Windows.Forms.MouseEventHandler(this.fileExplorer_MouseUp);
             // 
@@ -152,7 +155,7 @@ namespace CourseWork_2
             treeNode3,
             treeNode5,
             treeNode6});
-            this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 495);
+            this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 369);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
             this.treeViewFileExplorer.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterSelect);
@@ -161,15 +164,15 @@ namespace CourseWork_2
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // button1
+            // copyButton
             // 
-            this.button1.Location = new System.Drawing.Point(105, 28);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.copyButton.Location = new System.Drawing.Point(29, 525);
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(108, 51);
+            this.copyButton.TabIndex = 3;
+            this.copyButton.Text = "Copy";
+            this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.copyButton_Click);
             // 
             // textBox1
             // 
@@ -178,13 +181,35 @@ namespace CourseWork_2
             this.textBox1.Size = new System.Drawing.Size(742, 22);
             this.textBox1.TabIndex = 4;
             // 
+            // moveButton
+            // 
+            this.moveButton.Location = new System.Drawing.Point(29, 470);
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(108, 40);
+            this.moveButton.TabIndex = 5;
+            this.moveButton.Text = "Move";
+            this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
+            // 
+            // dleteButton
+            // 
+            this.dleteButton.Location = new System.Drawing.Point(174, 512);
+            this.dleteButton.Name = "dleteButton";
+            this.dleteButton.Size = new System.Drawing.Size(95, 50);
+            this.dleteButton.TabIndex = 6;
+            this.dleteButton.Text = "Delete";
+            this.dleteButton.UseVisualStyleBackColor = true;
+            this.dleteButton.Click += new System.EventHandler(this.dleteButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1145, 713);
+            this.Controls.Add(this.dleteButton);
+            this.Controls.Add(this.moveButton);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.copyButton);
             this.Controls.Add(this.treeViewFileExplorer);
             this.Controls.Add(this.fileExplorer);
             this.Name = "Form1";
@@ -208,8 +233,10 @@ namespace CourseWork_2
         private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
         private System.Windows.Forms.TreeView treeViewFileExplorer;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button moveButton;
+        private System.Windows.Forms.Button dleteButton;
     }
 }
 

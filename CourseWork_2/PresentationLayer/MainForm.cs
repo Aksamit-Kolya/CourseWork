@@ -16,18 +16,19 @@ namespace CourseWork_2
     public partial class Form1 : Form
     {
 
-        BusinessLayer.Business Business = new BusinessLayer.Business();
+        Business Business;
         Monitor Monitor = new Monitor();
-        public Form1()
+        public Form1(Business business)
         {
+            Business = business;
             InitializeComponent();
             //Directory.Delete(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\asddsa", true);
             /*            Business.CopyFilesRecursively(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test"
                                                     , @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
 /*            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
                 @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
-            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
-                              @"d:\");
+/*            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
+                             @"d:\");*/
 
             /*Business.MoveDirectory(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
                 @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
@@ -35,7 +36,7 @@ namespace CourseWork_2
                             @"d:\");*/
 
             ShowLogicalDrives();
-            Monitor.CreateWatcher(@"C:\");
+            //Monitor.CreateWatcher(@"C:\");
 
             treeViewFileExplorer.Nodes.Clear();
 
@@ -166,19 +167,95 @@ namespace CourseWork_2
             else ShowFiles(Business.GetFullPathForNode(treeViewFileExplorer.SelectedNode));
         }
 
-        private void button1_Click(object sender, EventArgs e)
+
+        private void fileExplorer_MouseClick(object sender, MouseEventArgs e)
         {
+/*            if(fileExplorer.SelectedItems.Count != 0)
+            {
+                copyButton.Enabled = true;
+            }*/
+        }
+
+        private void copyButton_Click(object sender, EventArgs e)
+        {
+            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            {
+                MessageBox.Show("Select file\\directory");
+                return;
+            }
+            string path;
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    string[] files = Directory.GetFiles(fbd.SelectedPath);
+                    path = fbd.SelectedPath;
 
-                    System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
+                    //string[] files = Directory.GetFiles(fbd.SelectedPath);
+                    //System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
                 }
+                else
+                {
+                    return;
+                    //MessageBox.Show("Some problems with FBD");
+                }
+
+
             }
+
+            foreach(ListViewItem item in fileExplorer.SelectedItems)
+            {
+                if(!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
+            }
+            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+        }
+
+        private void moveButton_Click(object sender, EventArgs e)
+        {
+            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            {
+                MessageBox.Show("Select file\\directory");
+                return;
+            }
+            string path;
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    path = fbd.SelectedPath;
+                }
+                else
+                {
+                    return;
+                    //MessageBox.Show("Some problems with FBD");
+                }
+
+
+            }
+
+            foreach (ListViewItem item in fileExplorer.SelectedItems)
+            {
+                if (!Business.Move(item.SubItems[4].Text, path)) MessageBox.Show("Can't move file: " + item.SubItems[4].Text);
+            }
+            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+        }
+
+        private void dleteButton_Click(object sender, EventArgs e)
+        {
+            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            {
+                MessageBox.Show("Select file\\directory");
+                return;
+            }
+            foreach (ListViewItem item in fileExplorer.SelectedItems)
+            {
+                if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
+            }
+            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+
         }
     }
 

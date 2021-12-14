@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CourseWork_2.BusinessLayer;
+using CourseWork_2.DataLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +18,10 @@ namespace CourseWork_2
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            IDbManager dbManager = new DbManager();
+            Business business = new Business(dbManager);
+            Application.Run(new Form1(business));
         }
     }
 }

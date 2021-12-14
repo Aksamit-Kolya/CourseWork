@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace CourseWork_2.DataLayer
 {
-    interface IDbManager
+    public interface IDbManager
     {
         List<FileInfo> GetFiles(string directoryPath);
         ImageList GetImagesForFileExplorer(ListView fileExplorer);

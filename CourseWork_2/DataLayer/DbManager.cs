@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace CourseWork_2.DataLayer
 {
-    class DbManager : IDbManager
+    public class DbManager : IDbManager
     {
         public List<FileInfo> GetFiles(string directoryPath)
         {

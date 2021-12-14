@@ -10,9 +10,16 @@ using System.Windows.Forms;
 
 namespace CourseWork_2.BusinessLayer
 {
-    class Business
+    public class Business
     {
-        IDbManager dbManager = new DbManager();
+        IDbManager dbManager;
+
+        public Business(IDbManager dbManager)
+        {
+            this.dbManager = dbManager;
+        }
+
+
         public List<FileInfo> GetFilesInfo(string directoryPath)
         {
             var it = Directory.EnumerateFiles(directoryPath).GetEnumerator();
@@ -198,9 +205,15 @@ namespace CourseWork_2.BusinessLayer
             }
         }
 
+        public bool Delete(string filePath)
+        {
+            if (File.GetAttributes(filePath).HasFlag(FileAttributes.Directory)) return DeleteDirectory(filePath);
+            else return DeleteFile(filePath);
+        }
 
 
-        public bool MoveFile(string oldPath, string newPath)
+
+        private bool MoveFile(string oldPath, string newPath)
         {
             try
             {
@@ -208,40 +221,67 @@ namespace CourseWork_2.BusinessLayer
                 return true;
             }catch(Exception e)
             {
+                MessageBox.Show(e.Message);
                 return false;
             }
         }
 
-        public bool MoveDirectory(string oldPath, string newPath)
+        private bool MoveDirectory(string oldPath, string newPath)
         {
             if (newPath.Contains(oldPath)) return false;
             else
             {
-                CopyAll(oldPath, newPath);
+                Copy(oldPath, newPath);
                 DeleteDirectory(oldPath);
                 return true;
             }
         }
 
+        public bool Move(string oldPath, string newPath)
+        {
+            if (newPath.Contains(oldPath)) return false;
+            else
+            {
+                Copy(oldPath, newPath);
+                Delete(oldPath);
+                return true;
+            }
+            /* if (File.GetAttributes(oldPath).HasFlag(FileAttributes.Directory)) return MoveDirectory(oldPath, newPath);
+             else return MoveFile(oldPath, newPath);*/
+        }
 
-        public bool CopyFile(string filePath, string newFilePath)
+
+        private static bool CopyFile(string filePath, string newFilePath)
         {
             try
             {
-                File.Copy(filePath, newFilePath);
+                new FileInfo(filePath).CopyTo(Path.Combine(newFilePath, new FileInfo(filePath).Name), true);
+                //File.Copy(filePath, newFilePath);
                 return true;
             }catch(Exception e)
             {
+                MessageBox.Show(e.Message);
                 return false;
             }
         }
-        public static void CopyAll(string sourceDirectory, string targetDirectory)
+        public static bool Copy(string sourceDirectory, string targetDirectory)
         {
-            DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
-            Directory.CreateDirectory(targetDirectory + "\\" + diSource.Name);
-            DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
+            try
+            {
+                if (!File.GetAttributes(sourceDirectory).HasFlag(FileAttributes.Directory)) return CopyFile(sourceDirectory, targetDirectory);
 
-            CopyAll(diSource, diTarget);
+                DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
+                Directory.CreateDirectory(targetDirectory + "\\" + diSource.Name);
+                DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
+
+                CopyAll(diSource, diTarget);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            
         }
         private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
@@ -262,7 +302,7 @@ namespace CourseWork_2.BusinessLayer
                 CopyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
-        public static void CopyFilesRecursively(string sourcePath, string targetPath)
+        public static void _CopyFilesRecursively(string sourcePath, string targetPath)
         {
             //Now Create all of the directories
             foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
