@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CourseWork_2.DataLayer.Models;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,5 +14,8 @@ namespace CourseWork_2.DataLayer
     {
         List<FileInfo> GetFiles(string directoryPath);
         ImageList GetImagesForFileExplorer(ListView fileExplorer);
+
+        void AddImageToDb(string ImageKey, Image image);
+        Dictionary<string, Image> GetImagesFromDb();
     }
 }

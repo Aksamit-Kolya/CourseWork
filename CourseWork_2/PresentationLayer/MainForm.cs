@@ -62,6 +62,8 @@ namespace CourseWork_2
         }
         private void ShowFiles(string directoryPath)
         {
+            currentPathTextBox.Text = directoryPath + "\\*";
+
             fileExplorer.Items.Clear();
             fileExplorer.View = View.Details;
             fileExplorer.Items.AddRange(Business.GetFileRecords(directoryPath).ToArray());
@@ -170,12 +172,13 @@ namespace CourseWork_2
 
         private void fileExplorer_MouseClick(object sender, MouseEventArgs e)
         {
-/*            if(fileExplorer.SelectedItems.Count != 0)
+            if(e.Button == MouseButtons.Right && fileExplorer.SelectedItems.Count != 0)
             {
-                copyButton.Enabled = true;
-            }*/
+                contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.Right);
+            }
         }
 
+        
         private void copyButton_Click(object sender, EventArgs e)
         {
             if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
@@ -256,6 +259,21 @@ namespace CourseWork_2
             }
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
 
+        }
+
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            copyButton_Click(sender, e);
+        }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dleteButton_Click(sender, e);
+        }
+
+        private void moveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moveButton_Click(sender, e);
         }
     }
 
