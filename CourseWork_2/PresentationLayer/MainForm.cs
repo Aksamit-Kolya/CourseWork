@@ -229,11 +229,14 @@ namespace CourseWork_2
 
 
             }
-
-            foreach(ListViewItem item in fileExplorer.SelectedItems)
-            {
-                if(!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
-            }
+            /*
+                        foreach(ListViewItem item in fileExplorer.SelectedItems)
+                        {
+                            if(!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
+                        }*/
+            CopyForm copyForm = new CopyForm(this, Business, fileExplorer.SelectedItems, path);
+            this.Enabled = false;
+            copyForm.Show();
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
         }
 
@@ -291,10 +294,13 @@ namespace CourseWork_2
 
             }
 
-            foreach (ListViewItem item in fileExplorer.SelectedItems)
+            /*foreach (ListViewItem item in fileExplorer.SelectedItems)
             {
                 if (!Business.Move(item.SubItems[4].Text, path)) MessageBox.Show("Can't move file: " + item.SubItems[4].Text);
-            }
+            }*/
+            MoveForm moveForm = new MoveForm(this, Business, fileExplorer.SelectedItems, path);
+            this.Enabled = false;
+            moveForm.Show();
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
         }
 
@@ -332,7 +338,9 @@ namespace CourseWork_2
             if (result != DialogResult.Yes) return;
 
             DeleteForm deleteForm = new DeleteForm(this, Business, fileExplorer.SelectedItems);
-            deleteForm.Show();
+            this.Enabled = false;
+            deleteForm.Show(this);
+            //deleteForm.ShowDialog();
             /*foreach (ListViewItem item in fileExplorer.SelectedItems)
             {
                 if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);

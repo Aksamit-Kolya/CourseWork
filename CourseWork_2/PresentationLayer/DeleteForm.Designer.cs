@@ -71,9 +71,9 @@ namespace CourseWork_2.PresentationLayer
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(310, 34);
+            this.button1.Location = new System.Drawing.Point(393, 58);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(108, 46);
+            this.button1.Size = new System.Drawing.Size(25, 22);
             this.button1.TabIndex = 4;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
@@ -92,6 +92,7 @@ namespace CourseWork_2.PresentationLayer
             this.Controls.Add(this.label1);
             this.Name = "DeleteForm";
             this.Text = "DeleteForm";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DeleteForm_FormClosed);
             this.Shown += new System.EventHandler(this.DeleteForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -12,56 +12,59 @@ using static System.Windows.Forms.ListView;
 
 namespace CourseWork_2.PresentationLayer
 {
-    public partial class DeleteForm : Form
+    public partial class MoveForm : Form
     {
         private MainForm MainForm;
         private Business Business;
         private List<ListViewItem> SelectedItems;
-        public DeleteForm(MainForm mainForm, Business business, SelectedListViewItemCollection selectedItems)
+        private string CopyPath;
+        public MoveForm(MainForm mainForm, Business business, SelectedListViewItemCollection selectedItems, string copyPath)
         {
             InitializeComponent();
             MainForm = mainForm;
             Business = business;
             SelectedItems = new List<ListViewItem>();
 
-            foreach(ListViewItem item in selectedItems)
+            foreach (ListViewItem item in selectedItems)
             {
                 SelectedItems.Add(item);
             }
             //mainForm.Enabled = false;
+            CopyPath = copyPath;
         }
 
-        private void DeleteForm_Load(object sender, EventArgs e)
+        private void MoveForm_Load(object sender, EventArgs e)
         {
             //MessageBox.Show("ABA");
             progressBar1.Maximum = SelectedItems.Count;
 
-            foreach(ListViewItem item in SelectedItems)
+            foreach (ListViewItem item in SelectedItems)
             {
                 try
                 {
                     deletedFileTextBox.Text = item.SubItems[4].Text;
-                    if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
+                    if (!Business.Move(item.SubItems[4].Text, CopyPath)) MessageBox.Show("Can't move file: " + item.SubItems[4].Text);
                     ++progressBar1.Value;
                     //System.Threading.Thread.Sleep(500);
                     //MessageBox.Show(item.SubItems[4].Text);
-                }catch(Exception ex)
+                }
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
             }
 
+            
             this.Close();
         }
 
-        private void DeleteForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MoveForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            MainForm.Enabled = true;
             string currentDirectory = SelectedItems[0].SubItems[4].Text;
             int i = currentDirectory.Length - 1;
             for (; currentDirectory[i] != '\\'; --i) { }
             MainForm.ShowFiles(currentDirectory.Substring(0, i));
-            MainForm.Enabled = true;
-            MainForm.Show();
         }
     }
 }

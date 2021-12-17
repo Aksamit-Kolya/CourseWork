@@ -268,7 +268,18 @@ namespace CourseWork_2.BusinessLayer
         {
             try
             {
-                new FileInfo(filePath).CopyTo(Path.Combine(newFilePath, new FileInfo(filePath).Name), true);
+                FileInfo copyedFileInfo = new FileInfo(filePath);
+                DirectoryInfo dirInfo = new DirectoryInfo(newFilePath);
+                foreach(FileInfo fileInfo in dirInfo.EnumerateFiles())
+                {
+                    if(fileInfo.Name == copyedFileInfo.Name)
+                    {
+                        copyedFileInfo.CopyTo(Path.Combine(newFilePath, "(copy)" + copyedFileInfo.Name), true);
+                        return true;
+                    }
+                }
+
+                copyedFileInfo.CopyTo(Path.Combine(newFilePath, new FileInfo(filePath).Name), true);
                 //File.Copy(filePath, newFilePath);
                 return true;
             }catch(Exception e)
@@ -284,10 +295,24 @@ namespace CourseWork_2.BusinessLayer
                 if (!File.GetAttributes(sourceDirectory).HasFlag(FileAttributes.Directory)) return CopyFile(sourceDirectory, targetDirectory);
 
                 DirectoryInfo diSource = new DirectoryInfo(sourceDirectory);
-                Directory.CreateDirectory(targetDirectory + "\\" + diSource.Name);
-                DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
 
+                DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
+                //DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
+
+
+                foreach (DirectoryInfo dirInfo in diTarget.GetDirectories())
+                {
+                    if (dirInfo.Name == diSource.Name)
+                    {
+                        Directory.CreateDirectory(diTarget.FullName + "\\" + "(copy)" + diSource.Name);
+                        CopyAll(diSource, diTarget);
+                        return true;
+                    }
+                }
+                
+                Directory.CreateDirectory(diTarget.FullName + "\\" + diSource.Name);
                 CopyAll(diSource, diTarget);
+
                 return true;
             }
             catch (Exception e)
@@ -298,7 +323,15 @@ namespace CourseWork_2.BusinessLayer
         }
         private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
         {
-            Directory.CreateDirectory(target.FullName);
+/*            foreach(DirectoryInfo dirInfo in target.GetDirectories())
+            {
+                if(dirInfo.Name == source.Name)
+                {
+                    Directory.CreateDirectory(target.FullName);
+
+                }
+            }*/
+            //Directory.CreateDirectory(target.FullName);
 
             // Copy each file into the new directory.
             foreach (FileInfo fi in source.GetFiles())

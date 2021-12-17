@@ -9,3 +9,5 @@ C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.e
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.pdb
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.DeleteForm.resources
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.MainForm.resources
+C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.CopyForm.resources
+C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.MoveForm.resources
