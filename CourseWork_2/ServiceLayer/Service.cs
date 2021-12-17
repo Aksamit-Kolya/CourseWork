@@ -57,6 +57,56 @@ namespace CourseWork_2.ServiceLayer
             return node.FullPath[12] + ":" + node.FullPath.Substring(15);
         }
 
+        public static List<string> collectExpandedNodes(TreeNodeCollection Nodes)
+        {
+            List<string> _lst = new List<string>();
+            foreach (TreeNode checknode in Nodes)
+            {
+                if (checknode.IsExpanded)
+                    _lst.Add(checknode.Name);
+                if (checknode.Nodes.Count > 0)
+                    _lst.AddRange(collectExpandedNodes(checknode.Nodes));
+            }
+            return _lst;
+        }
+        public static TreeNode FindNodeByName(TreeNodeCollection NodesCollection, string Name)
+        {
+            TreeNode returnNode = null; // Default value to return
+            foreach (TreeNode checkNode in NodesCollection)
+            {
+                if (checkNode.Name == Name)  //checks if this node name is correct
+                    returnNode = checkNode;
+                else if (checkNode.Nodes.Count > 0) //node has child
+                {
+                    returnNode = FindNodeByName(checkNode.Nodes, Name);
+                }
+
+                if (returnNode != null) //check if founded do not continue and break
+                {
+                    return returnNode;
+                }
+
+            }
+            //not found
+            return returnNode;
+        }
+        public static void expandNodePath(TreeNode node)
+        {
+            if (node == null)
+                return;
+            if (node.Level != 0) //check if it is not root
+            {
+                node.Expand();
+                expandNodePath(node.Parent);
+            }
+            else
+            {
+                node.Expand(); // this is root 
+            }
+
+        }
+
+
         [StructLayout(LayoutKind.Sequential)]
         public struct SHFILEINFO
         {

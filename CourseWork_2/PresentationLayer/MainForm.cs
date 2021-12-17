@@ -23,7 +23,7 @@ namespace CourseWork_2
         public MainForm(Business business)
         {
 
-               Business = business;
+            Business = business;
             InitializeComponent();
 
 
@@ -31,11 +31,18 @@ namespace CourseWork_2
             ShowLogicalDrives();
             //Monitor.CreateWatcher(@"C:\");
 
-            treeViewFileExplorer.Nodes.Clear();
 
             refreshButton.ImageList = Business.GetImageForRefreshButton();
             refreshButton.ImageIndex = 0;
 
+            ShowTreeViewFileExplorer();            
+        }
+        public void ShowTreeViewFileExplorer()
+        {
+            List<string> expandedNodes = Service.collectExpandedNodes(treeViewFileExplorer.Nodes);
+
+            treeViewFileExplorer.Nodes.Clear();
+            
             ImageList images = new ImageList();
             images.Images.Add(Business.GetImageForDrivers().Images[0]);
             images.Images.Add(Business.GetImageForDirectory());
@@ -53,8 +60,13 @@ namespace CourseWork_2
 
                 treeViewFileExplorer.Nodes.Add(node);
             }
-            
+
+            foreach(string expandedNodeName in expandedNodes)
+            {
+                Service.expandNodePath(Service.FindNodeByName(treeViewFileExplorer.Nodes, expandedNodeName));
+            }
         }
+
         public void ShowFiles(string directoryPath)
         {
             currentPathTextBox.Text = directoryPath + "\\*";
@@ -230,15 +242,12 @@ namespace CourseWork_2
 
 
             }
-            /*
-                        foreach(ListViewItem item in fileExplorer.SelectedItems)
-                        {
-                            if(!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
-                        }*/
             CopyForm copyForm = new CopyForm(this, Business, fileExplorer.SelectedItems, path);
             this.Enabled = false;
             copyForm.Show();
+            while (this.Enabled != true) { }
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+            ShowTreeViewFileExplorer();
         }
 
         private void moveButton_Click(object sender, EventArgs e)
@@ -289,20 +298,17 @@ namespace CourseWork_2
                 else
                 {
                     return;
-                    //MessageBox.Show("Some problems with FBD");
                 }
 
 
             }
 
-            /*foreach (ListViewItem item in fileExplorer.SelectedItems)
-            {
-                if (!Business.Move(item.SubItems[4].Text, path)) MessageBox.Show("Can't move file: " + item.SubItems[4].Text);
-            }*/
             MoveForm moveForm = new MoveForm(this, Business, fileExplorer.SelectedItems, path);
             this.Enabled = false;
             moveForm.Show();
+            while (this.Enabled != true) { }
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+            ShowTreeViewFileExplorer();
         }
 
         private void dleteButton_Click(object sender, EventArgs e)
@@ -341,14 +347,12 @@ namespace CourseWork_2
             DeleteForm deleteForm = new DeleteForm(this, Business, fileExplorer.SelectedItems);
             this.Enabled = false;
             deleteForm.Show(this);
-            //deleteForm.ShowDialog();
-            /*foreach (ListViewItem item in fileExplorer.SelectedItems)
-            {
-                if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
-            }*/
+
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+            ShowTreeViewFileExplorer();
 
         }
+
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -375,6 +379,8 @@ namespace CourseWork_2
             {
                 ShowLogicalDrives();
             }
+
+            ShowTreeViewFileExplorer();
         }
     }
 
