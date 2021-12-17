@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CourseWork_2.ServiceLayer
 {
@@ -49,6 +50,11 @@ namespace CourseWork_2.ServiceLayer
         public static Icon GetLargeFileIcon(string fileName)
         {
             return GetLargeFileIcon(new FileInfo(fileName));
+        }
+
+        public static string GetFullPathForNode(TreeNode node)
+        {
+            return node.FullPath[12] + ":" + node.FullPath.Substring(15);
         }
 
         [StructLayout(LayoutKind.Sequential)]

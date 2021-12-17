@@ -72,9 +72,9 @@ namespace CourseWork_2
             this.fileExplorer.HideSelection = false;
             this.fileExplorer.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-            this.fileExplorer.Location = new System.Drawing.Point(310, 109);
+            this.fileExplorer.Location = new System.Drawing.Point(310, 64);
             this.fileExplorer.Name = "fileExplorer";
-            this.fileExplorer.Size = new System.Drawing.Size(743, 467);
+            this.fileExplorer.Size = new System.Drawing.Size(856, 536);
             this.fileExplorer.TabIndex = 0;
             this.fileExplorer.UseCompatibleStateImageBehavior = false;
             this.fileExplorer.View = System.Windows.Forms.View.Details;
@@ -85,25 +85,25 @@ namespace CourseWork_2
             // 
             this.nameColumn.Tag = "";
             this.nameColumn.Text = "Name";
-            this.nameColumn.Width = 416;
+            this.nameColumn.Width = 481;
             // 
             // existsColumn
             // 
             this.existsColumn.Tag = "";
             this.existsColumn.Text = "Exists";
-            this.existsColumn.Width = 65;
+            this.existsColumn.Width = 87;
             // 
             // lengthColumn
             // 
             this.lengthColumn.Tag = "lengthColumn";
             this.lengthColumn.Text = "Length";
-            this.lengthColumn.Width = 111;
+            this.lengthColumn.Width = 102;
             // 
             // dateColumn
             // 
             this.dateColumn.Tag = "dateColumn";
             this.dateColumn.Text = "Date";
-            this.dateColumn.Width = 143;
+            this.dateColumn.Width = 176;
             // 
             // contextMenuStrip1
             // 
@@ -139,7 +139,7 @@ namespace CourseWork_2
             // treeViewFileExplorer
             // 
             this.treeViewFileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 81);
+            this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 64);
             this.treeViewFileExplorer.Name = "treeViewFileExplorer";
             treeNode1.Name = "Node6";
             treeNode1.Text = "abacaba";
@@ -157,7 +157,7 @@ namespace CourseWork_2
             treeNode3,
             treeNode5,
             treeNode6});
-            this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 369);
+            this.treeViewFileExplorer.Size = new System.Drawing.Size(249, 369);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
             this.treeViewFileExplorer.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterSelect);
@@ -168,9 +168,9 @@ namespace CourseWork_2
             // 
             // copyButton
             // 
-            this.copyButton.Location = new System.Drawing.Point(29, 467);
+            this.copyButton.Location = new System.Drawing.Point(29, 491);
             this.copyButton.Name = "copyButton";
-            this.copyButton.Size = new System.Drawing.Size(275, 31);
+            this.copyButton.Size = new System.Drawing.Size(249, 31);
             this.copyButton.TabIndex = 3;
             this.copyButton.Text = "Copy";
             this.copyButton.UseVisualStyleBackColor = true;
@@ -178,16 +178,16 @@ namespace CourseWork_2
             // 
             // currentPathTextBox
             // 
-            this.currentPathTextBox.Location = new System.Drawing.Point(341, 81);
+            this.currentPathTextBox.Location = new System.Drawing.Point(341, 36);
             this.currentPathTextBox.Name = "currentPathTextBox";
-            this.currentPathTextBox.Size = new System.Drawing.Size(712, 22);
+            this.currentPathTextBox.Size = new System.Drawing.Size(825, 22);
             this.currentPathTextBox.TabIndex = 4;
             // 
             // moveButton
             // 
-            this.moveButton.Location = new System.Drawing.Point(29, 504);
+            this.moveButton.Location = new System.Drawing.Point(29, 528);
             this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(275, 31);
+            this.moveButton.Size = new System.Drawing.Size(249, 31);
             this.moveButton.TabIndex = 5;
             this.moveButton.Text = "Move";
             this.moveButton.UseVisualStyleBackColor = true;
@@ -195,9 +195,9 @@ namespace CourseWork_2
             // 
             // dleteButton
             // 
-            this.dleteButton.Location = new System.Drawing.Point(29, 541);
+            this.dleteButton.Location = new System.Drawing.Point(29, 565);
             this.dleteButton.Name = "dleteButton";
-            this.dleteButton.Size = new System.Drawing.Size(275, 35);
+            this.dleteButton.Size = new System.Drawing.Size(249, 35);
             this.dleteButton.TabIndex = 6;
             this.dleteButton.Text = "Delete";
             this.dleteButton.UseVisualStyleBackColor = true;
@@ -206,18 +206,18 @@ namespace CourseWork_2
             // refreshButton
             // 
             this.refreshButton.Image = global::CourseWork_2.Properties.Resources.back;
-            this.refreshButton.Location = new System.Drawing.Point(310, 81);
+            this.refreshButton.Location = new System.Drawing.Point(310, 36);
             this.refreshButton.Name = "refreshButton";
             this.refreshButton.Size = new System.Drawing.Size(25, 22);
             this.refreshButton.TabIndex = 7;
             this.refreshButton.UseVisualStyleBackColor = true;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1145, 713);
+            this.ClientSize = new System.Drawing.Size(1178, 634);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.dleteButton);
             this.Controls.Add(this.moveButton);
@@ -225,7 +225,7 @@ namespace CourseWork_2
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.treeViewFileExplorer);
             this.Controls.Add(this.fileExplorer);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);

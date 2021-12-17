@@ -61,7 +61,7 @@ namespace CourseWork_2.PresentationLayer
             for (; currentDirectory[i] != '\\'; --i) { }
             MainForm.ShowFiles(currentDirectory.Substring(0, i));
             MainForm.Enabled = true;
-            MainForm.Show();
+            //MainForm.Show();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CourseWork_2.BusinessLayer;
 using CourseWork_2.PresentationLayer;
+using CourseWork_2.ServiceLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -148,22 +149,22 @@ namespace CourseWork_2
             {
                 foreach(TreeNode node in e.Node.Nodes)
                 {
-                    foreach(DirectoryInfo dirInfo in Business.GetDirectoriesInfo(Business.GetFullPathForNode(node)))
+                    foreach(DirectoryInfo dirInfo in Business.GetDirectoriesInfo(Service.GetFullPathForNode(node)))
                     {
                         node.Nodes.Add(dirInfo.Name, dirInfo.Name, 1, 1);
                     }
                 }
             }
             
-            //MessageBox.Show(Business.GetFullPathForNode(e.Node));
+            //MessageBox.Show(Service.GetFullPathForNode(e.Node));
             //treeViewFileExplorer.Nodes[0].Nodes.Add("test");
         }
 
 
         private void treeViewFileExplorer_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (treeViewFileExplorer.SelectedNode.Parent == null) ShowFiles(Business.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\");
-            else ShowFiles(Business.GetFullPathForNode(treeViewFileExplorer.SelectedNode));
+            if (treeViewFileExplorer.SelectedNode.Parent == null) ShowFiles(Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\");
+            else ShowFiles(Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode));
         }
 
 

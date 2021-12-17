@@ -49,7 +49,6 @@ namespace CourseWork_2.BusinessLayer
 
             return fileInfos;
         }
-
         public List<DirectoryInfo> GetDirectoriesInfo(string directoryPath)
         {
             var it = Directory.EnumerateDirectories(directoryPath).GetEnumerator();
@@ -78,63 +77,6 @@ namespace CourseWork_2.BusinessLayer
             }
 
             return directoryInfos;
-        }
-
-        public List<string> GetDirectories(string directoryPath)
-        {
-            var it = Directory.EnumerateDirectories(directoryPath).GetEnumerator();
-            List<string> directoryNames = new List<string>();
-
-
-            while (true)
-            {
-                try
-                {
-                    while (it.MoveNext())
-                    {
-                        DirectoryInfo fileInf = new DirectoryInfo(it.Current);
-
-                        if (!fileInf.Attributes.HasFlag(FileAttributes.Hidden)
-                            &&
-                            !fileInf.Attributes.HasFlag(FileAttributes.System)) directoryNames.Add(it.Current);
-                    }
-                    break;
-
-                }
-                catch (System.UnauthorizedAccessException e)
-                {
-
-                }
-            }
-
-            return directoryNames;
-        }
-
-        public ImageList GetImagesForFileExplorer(ListView fileExplorer)
-        {
-            return dbManager.GetImagesForFileExplorer(fileExplorer);
-        }
-
-        public ImageList GetImageForDrivers()
-        {
-            ImageList imageList = new ImageList();
-            imageList.Images.Add(dbManager.GetImage("driveImage"));
-            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
-            imageList.ImageSize = new Size(45, 45);
-            return imageList;
-        }
-        public ImageList GetImageForRefreshButton()
-        {
-            ImageList imageList = new ImageList();
-            imageList.Images.Add(dbManager.GetImage("refreshButtonImage2"));
-            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
-            imageList.ImageSize = new Size(15, 15);
-            return imageList;
-
-        }
-        public Image GetImageForDirectory()
-        {
-            return dbManager.GetImage("drictoryImage");
         }
         public List<ListViewItem> GetFileRecords(string directoryPath)
         {
@@ -172,7 +114,35 @@ namespace CourseWork_2.BusinessLayer
 
             return items;
         }
+        public List<string> GetDirectories(string directoryPath)
+        {
+            var it = Directory.EnumerateDirectories(directoryPath).GetEnumerator();
+            List<string> directoryNames = new List<string>();
 
+
+            while (true)
+            {
+                try
+                {
+                    while (it.MoveNext())
+                    {
+                        DirectoryInfo fileInf = new DirectoryInfo(it.Current);
+
+                        if (!fileInf.Attributes.HasFlag(FileAttributes.Hidden)
+                            &&
+                            !fileInf.Attributes.HasFlag(FileAttributes.System)) directoryNames.Add(it.Current);
+                    }
+                    break;
+
+                }
+                catch (System.UnauthorizedAccessException e)
+                {
+
+                }
+            }
+
+            return directoryNames;
+        }
         public List<ListViewItem> GetLogicalDiskRecords()
         {
             List<ListViewItem> listViewItems = new List<ListViewItem>();
@@ -187,9 +157,31 @@ namespace CourseWork_2.BusinessLayer
             return listViewItems;
         }
 
-        public string GetFullPathForNode(TreeNode node)
+
+        public ImageList GetImagesForFileExplorer(ListView fileExplorer)
         {
-            return node.FullPath[12] + ":" + node.FullPath.Substring(15);
+            return dbManager.GetImagesForFileExplorer(fileExplorer);
+        }
+        public ImageList GetImageForDrivers()
+        {
+            ImageList imageList = new ImageList();
+            imageList.Images.Add(dbManager.GetImage("driveImage"));
+            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
+            imageList.ImageSize = new Size(45, 45);
+            return imageList;
+        }
+        public ImageList GetImageForRefreshButton()
+        {
+            ImageList imageList = new ImageList();
+            imageList.Images.Add(dbManager.GetImage("refreshButtonImage2"));
+            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
+            imageList.ImageSize = new Size(15, 15);
+            return imageList;
+
+        }
+        public Image GetImageForDirectory()
+        {
+            return dbManager.GetImage("drictoryImage");
         }
 
 
@@ -217,7 +209,6 @@ namespace CourseWork_2.BusinessLayer
                 return false;
             }
         }
-
         public bool Delete(string filePath)
         {
             if (File.GetAttributes(filePath).HasFlag(FileAttributes.Directory)) return DeleteDirectory(filePath);
@@ -238,7 +229,6 @@ namespace CourseWork_2.BusinessLayer
                 return false;
             }
         }
-
         private bool MoveDirectory(string oldPath, string newPath)
         {
             if (newPath.Contains(oldPath)) return false;
@@ -249,7 +239,6 @@ namespace CourseWork_2.BusinessLayer
                 return true;
             }
         }
-
         public bool Move(string oldPath, string newPath)
         {
             if (newPath.Contains(oldPath)) return false;
