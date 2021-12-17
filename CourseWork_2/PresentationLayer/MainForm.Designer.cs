@@ -1,7 +1,7 @@
 ﻿
 namespace CourseWork_2
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -30,16 +30,16 @@ namespace CourseWork_2
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("testFile");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("aba");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("testFile");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("aba");
             this.fileExplorer = new System.Windows.Forms.ListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.existsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -55,7 +55,7 @@ namespace CourseWork_2
             this.currentPathTextBox = new System.Windows.Forms.TextBox();
             this.moveButton = new System.Windows.Forms.Button();
             this.dleteButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.refreshButton = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,7 +71,7 @@ namespace CourseWork_2
             this.fileExplorer.GridLines = true;
             this.fileExplorer.HideSelection = false;
             this.fileExplorer.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.fileExplorer.Location = new System.Drawing.Point(310, 109);
             this.fileExplorer.Name = "fileExplorer";
             this.fileExplorer.Size = new System.Drawing.Size(743, 467);
@@ -141,22 +141,22 @@ namespace CourseWork_2
             this.treeViewFileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 81);
             this.treeViewFileExplorer.Name = "treeViewFileExplorer";
-            treeNode7.Name = "Node6";
-            treeNode7.Text = "abacaba";
-            treeNode8.Name = "Node4";
-            treeNode8.Text = "aba";
-            treeNode9.Name = "Node1";
-            treeNode9.Text = "test";
-            treeNode10.Name = "Node5";
-            treeNode10.Text = "abacaba";
-            treeNode11.Name = "Node2";
-            treeNode11.Text = "aba";
-            treeNode12.Name = "Node3";
-            treeNode12.Text = "aba";
+            treeNode1.Name = "Node6";
+            treeNode1.Text = "abacaba";
+            treeNode2.Name = "Node4";
+            treeNode2.Text = "aba";
+            treeNode3.Name = "Node1";
+            treeNode3.Text = "test";
+            treeNode4.Name = "Node5";
+            treeNode4.Text = "abacaba";
+            treeNode5.Name = "Node2";
+            treeNode5.Text = "aba";
+            treeNode6.Name = "Node3";
+            treeNode6.Text = "aba";
             this.treeViewFileExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode11,
-            treeNode12});
+            treeNode3,
+            treeNode5,
+            treeNode6});
             this.treeViewFileExplorer.Size = new System.Drawing.Size(275, 369);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
@@ -203,22 +203,22 @@ namespace CourseWork_2
             this.dleteButton.UseVisualStyleBackColor = true;
             this.dleteButton.Click += new System.EventHandler(this.dleteButton_Click);
             // 
-            // button1
+            // refreshButton
             // 
-            this.button1.Image = global::CourseWork_2.Properties.Resources.back;
-            this.button1.Location = new System.Drawing.Point(243, 38);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(37, 37);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.refreshButton.Image = global::CourseWork_2.Properties.Resources.back;
+            this.refreshButton.Location = new System.Drawing.Point(310, 81);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(25, 22);
+            this.refreshButton.TabIndex = 7;
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1145, 713);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.dleteButton);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.currentPathTextBox);
@@ -250,7 +250,7 @@ namespace CourseWork_2
         private System.Windows.Forms.TextBox currentPathTextBox;
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button dleteButton;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button refreshButton;
     }
 }
 

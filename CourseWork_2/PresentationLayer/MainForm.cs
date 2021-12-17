@@ -1,4 +1,5 @@
 ﻿using CourseWork_2.BusinessLayer;
+using CourseWork_2.PresentationLayer;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,37 +14,30 @@ using System.Windows.Forms;
 
 namespace CourseWork_2
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
 
         Business Business;
         Monitor Monitor = new Monitor();
-        public Form1(Business business)
+        public MainForm(Business business)
         {
-            Business = business;
-            InitializeComponent();
-            //Directory.Delete(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\asddsa", true);
-            /*            Business.CopyFilesRecursively(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test"
-                                                    , @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
-/*            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
-                @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
-/*            Business.CopyAll(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
-                             @"d:\");*/
 
-            /*Business.MoveDirectory(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
-                @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer");*/
-            /*            Business.MoveDirectory(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\test",
-                            @"d:\");*/
+               Business = business;
+            InitializeComponent();
+
+
 
             ShowLogicalDrives();
             //Monitor.CreateWatcher(@"C:\");
 
             treeViewFileExplorer.Nodes.Clear();
 
-            //MessageBox.Show(Directory.GetCurrentDirectory());
+            refreshButton.ImageList = Business.GetImageForRefreshButton();
+            refreshButton.ImageIndex = 0;
+
             ImageList images = new ImageList();
-            images.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Drive-Local-icon.png"));
-            images.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия (1).jpg"));
+            images.Images.Add(Business.GetImageForDrivers().Images[0]);
+            images.Images.Add(Business.GetImageForDirectory());
             treeViewFileExplorer.ImageList = images;
 
             foreach (string drives in Directory.GetLogicalDrives())
@@ -60,7 +54,7 @@ namespace CourseWork_2
             }
             
         }
-        private void ShowFiles(string directoryPath)
+        public void ShowFiles(string directoryPath)
         {
             currentPathTextBox.Text = directoryPath + "\\*";
 
@@ -83,6 +77,9 @@ namespace CourseWork_2
             {
                 item.ImageIndex = 0;
             }
+
+            currentPathTextBox.Clear();
+            currentPathTextBox.Text = "Logical disk(*)";
         }
 
         private void ShowIcons()
@@ -186,6 +183,9 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
+
+
+
             string path;
             using (var fbd = new FolderBrowserDialog())
             {
@@ -195,8 +195,31 @@ namespace CourseWork_2
                 {
                     path = fbd.SelectedPath;
 
-                    //string[] files = Directory.GetFiles(fbd.SelectedPath);
-                    //System.Windows.Forms.MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
+                    string showMessage = "";
+                    if (fileExplorer.SelectedItems.Count > 1)
+                    {
+                        showMessage = "Are you sure you want to copy these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
+                        foreach (ListViewItem item in fileExplorer.SelectedItems)
+                        {
+                            showMessage += "\n" + item.SubItems[4].Text;
+                        }
+                    }
+                    else
+                    {
+                        showMessage = "Are you sure you want to copy the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+
+                    }
+                    showMessage += "\nin: " + path;
+
+                    DialogResult MessageResult = MessageBox.Show(
+                        showMessage,
+                        "Message",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1,
+                        MessageBoxOptions.DefaultDesktopOnly);
+
+                    if (MessageResult != DialogResult.Yes) return;
                 }
                 else
                 {
@@ -221,6 +244,10 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
+
+            
+
+            
             string path;
             using (var fbd = new FolderBrowserDialog())
             {
@@ -229,6 +256,31 @@ namespace CourseWork_2
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     path = fbd.SelectedPath;
+                    
+                    string showMessage = "";
+                    if (fileExplorer.SelectedItems.Count > 1)
+                    {
+                        showMessage = "Are you sure you want to move these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
+                        foreach (ListViewItem item in fileExplorer.SelectedItems)
+                        {
+                            showMessage += "\n" + item.SubItems[4].Text;
+                        }
+                    }
+                    else
+                    {
+                        showMessage = "Are you sure you want to move the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+
+                    }
+                    showMessage += "\nin: " + path;
+                    DialogResult MessageResult = MessageBox.Show(
+                        showMessage,
+                        "Message",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1,
+                        MessageBoxOptions.DefaultDesktopOnly);
+
+                    if (MessageResult != DialogResult.Yes) return;
                 }
                 else
                 {
@@ -253,10 +305,38 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
-            foreach (ListViewItem item in fileExplorer.SelectedItems)
+
+            string showMessage = "";
+            if (fileExplorer.SelectedItems.Count > 1)
+            {
+                showMessage = "Are you sure you want to delete these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
+                foreach (ListViewItem item in fileExplorer.SelectedItems)
+                {
+                    showMessage += "\n" + item.SubItems[4].Text;
+                }
+            }
+            else
+            {
+                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+
+            }
+
+            DialogResult result = MessageBox.Show(
+                showMessage,
+                "Message",
+                MessageBoxButtons.YesNoCancel,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1,
+                MessageBoxOptions.DefaultDesktopOnly);
+
+            if (result != DialogResult.Yes) return;
+
+            DeleteForm deleteForm = new DeleteForm(this, Business, fileExplorer.SelectedItems);
+            deleteForm.Show();
+            /*foreach (ListViewItem item in fileExplorer.SelectedItems)
             {
                 if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
-            }
+            }*/
             ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
 
         }
@@ -274,6 +354,18 @@ namespace CourseWork_2
         private void moveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             moveButton_Click(sender, e);
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            if (currentPathTextBox.Text != "Logical disk(*)")
+            {
+                ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+            }
+            else
+            {
+                ShowLogicalDrives();
+            }
         }
     }
 

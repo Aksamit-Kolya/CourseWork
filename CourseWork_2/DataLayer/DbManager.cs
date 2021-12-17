@@ -55,7 +55,8 @@ namespace CourseWork_2.DataLayer
             int imageCount;
             if (fileExplorer.Items[0].Text == "")
             {
-                imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\back.png"));
+                //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\back.png"));
+                imageList.Images.Add(ProgramIcons.GetIconByName("backImage"));
                 imageCount = 1;
             }
             else
@@ -69,13 +70,15 @@ namespace CourseWork_2.DataLayer
                 {
                     //Directory.GetParent(Directory.GetCurrentDirectory()).FullName + 
                     case "":
-                        image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия (1).jpg");
+                        image = ProgramIcons.GetIconByName("drictoryImage");
+                        //image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия (1).jpg");
                         break;
                     case ".exe":
                         image = ServiceLayer.Service.GetSmallFileIcon(fileExplorer.Items[imageCount].SubItems[4].Text).ToBitmap();
                         break;
                     default:
-                        image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-file-24.png");
+                        //image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-file-24.png");
+                        image = ProgramIcons.GetIconByName("unknownFileImage");
                         break;
                 }
                 imageList.Images.Add(image);
@@ -139,7 +142,7 @@ namespace CourseWork_2.DataLayer
                     {
                         BinaryFormatter formattter = new BinaryFormatter();
                         Image image = (Image)formattter.Deserialize(ms);
-                        ProgramIcons.AddIcons(imageName, image);
+                        //ProgramIcons.AddIcons(imageName, image);
 
                         return image;
                     }

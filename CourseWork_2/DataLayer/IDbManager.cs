@@ -13,9 +13,11 @@ namespace CourseWork_2.DataLayer
     public interface IDbManager
     {
         List<FileInfo> GetFiles(string directoryPath);
-        ImageList GetImagesForFileExplorer(ListView fileExplorer);
 
+        ImageList GetImagesForFileExplorer(ListView fileExplorer);
         void AddImageToDb(string ImageKey, Image image);
-        Dictionary<string, Image> GetImagesFromDb();
+        ProgramIcons GetImages();
+        Image GetImage(string imageName);
+
     }
 }

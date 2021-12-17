@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,15 +23,13 @@ namespace CourseWork_2.DataLayer.Models
             Icons = images;
         }
         
-        public void AddIcons(string bytes_str)
+        public void AddIcons(string name, Image image)
         {
-            byte[] bytes = new byte[bytes_str.Length];
-
-            for(int i = 0; i < bytes.Length; ++i)
-            {
-                bytes[i] = (byte)(int)bytes_str[i];
-            }
-            
+            Icons.Add(name, image);
+        }
+        public Image GetIconByName(string name)
+        {
+            return Icons[name];
         }
     }
 }

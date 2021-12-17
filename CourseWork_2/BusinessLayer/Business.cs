@@ -118,10 +118,23 @@ namespace CourseWork_2.BusinessLayer
         public ImageList GetImageForDrivers()
         {
             ImageList imageList = new ImageList();
-            imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Drive-Local-icon.png"));
+            imageList.Images.Add(dbManager.GetImage("driveImage"));
             //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
             imageList.ImageSize = new Size(45, 45);
             return imageList;
+        }
+        public ImageList GetImageForRefreshButton()
+        {
+            ImageList imageList = new ImageList();
+            imageList.Images.Add(dbManager.GetImage("refreshButtonImage2"));
+            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
+            imageList.ImageSize = new Size(15, 15);
+            return imageList;
+
+        }
+        public Image GetImageForDirectory()
+        {
+            return dbManager.GetImage("drictoryImage");
         }
         public List<ListViewItem> GetFileRecords(string directoryPath)
         {
