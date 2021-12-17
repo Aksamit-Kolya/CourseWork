@@ -16,7 +16,7 @@ namespace CourseWork_2.DataLayer
     {
         ProgramIcons ProgramIcons;
         XmlDocument xDoc;
-        private string XmlDocumentPath = @"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\Properties\Images.xml";
+        private string XmlDocumentPath;
         private static DbManager Instance;
         public static DbManager GetInstance()
         {
@@ -30,7 +30,8 @@ namespace CourseWork_2.DataLayer
         private DbManager()
         {
             ProgramIcons = new ProgramIcons();
-            
+            XmlDocumentPath = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 22) + "CourseWork_2\\Properties\\Images.xml";
+                //C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\DataLayer\DbManager.cs
             xDoc = new XmlDocument();
             xDoc.Load(XmlDocumentPath);
 
