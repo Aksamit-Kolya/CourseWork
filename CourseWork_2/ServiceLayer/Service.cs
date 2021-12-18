@@ -107,6 +107,13 @@ namespace CourseWork_2.ServiceLayer
         }
 
 
+        public static bool IsPathValidRootedLocal(String pathString)
+        {
+            Uri pathUri;
+            Boolean isValidUri = Uri.TryCreate(pathString, UriKind.Absolute, out pathUri);
+            return isValidUri && pathUri != null && pathUri.IsLoopback;
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         public struct SHFILEINFO
         {
@@ -127,5 +134,17 @@ namespace CourseWork_2.ServiceLayer
 
         [DllImport("shell32.dll")]
         public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
+
     }
+    
 }
+    namespace System.IO
+    {
+        public static class FileInfoExtensions
+        {
+            public static void Rename(this FileInfo fileInfo, string newName)
+            {
+                fileInfo.MoveTo(Path.Combine(fileInfo.Directory.FullName, newName));
+            }
+        }
+    }

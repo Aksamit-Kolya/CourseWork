@@ -1,4 +1,5 @@
 ﻿using CourseWork_2.BusinessLayer;
+using CourseWork_2.PresentationLayer.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,9 @@ namespace CourseWork_2.PresentationLayer
         private Business Business;
         private List<ListViewItem> SelectedItems;
         private string CopyPath;
+
+        public string LabelText { get => label1.Text; set => label1.Text = value; }
+
         public CopyForm(MainForm mainForm, Business business, SelectedListViewItemCollection selectedItems, string copyPath)
         {
             InitializeComponent();

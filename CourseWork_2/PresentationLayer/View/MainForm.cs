@@ -1,5 +1,7 @@
 ﻿using CourseWork_2.BusinessLayer;
+using CourseWork_2.BusinessLayer.Presenters;
 using CourseWork_2.PresentationLayer;
+using CourseWork_2.PresentationLayer.View;
 using CourseWork_2.ServiceLayer;
 using System;
 using System.Collections.Generic;
@@ -92,7 +94,7 @@ namespace CourseWork_2
             }
 
             currentPathTextBox.Clear();
-            currentPathTextBox.Text = "Logical disk(*)";
+            currentPathTextBox.Text = "computer\\*";
         }
 
         private void ShowIcons()
@@ -182,12 +184,41 @@ namespace CourseWork_2
 
         private void fileExplorer_MouseClick(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Right && fileExplorer.SelectedItems.Count != 0)
+            if (e.Button == MouseButtons.Right && fileExplorer.SelectedItems.Count != 0)
             {
+                if (fileExplorer.SelectedItems[0].SubItems.Count < 2 || fileExplorer.SelectedItems[0].SubItems[0].Text == "") return;
+                if(fileExplorer.SelectedItems.Count > 2)
+                {
+                    contextMenuStrip1.Items[0].Enabled = false;
+                    contextMenuStrip1.Items[1].Text = "Copy all";
+                    contextMenuStrip1.Items[2].Text = "Delete all";
+                    contextMenuStrip1.Items[3].Text = "Move all";
+                }
+                else
+                {
+                    contextMenuStrip1.Items[0].Enabled = true;
+                    contextMenuStrip1.Items[1].Text = "Copy";
+                    contextMenuStrip1.Items[2].Text = "Delete";
+                    contextMenuStrip1.Items[3].Text = "Move";
+                }
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.Right);
             }
         }
 
+        
+
+        private void renameButton_Click(object sender, EventArgs e)
+        {
+            if(fileExplorer.SelectedItems.Count > 1)
+            {
+                MessageBox.Show("More than one file selected");
+                return;
+            }
+            if (fileExplorer.SelectedItems[0].SubItems.Count < 2 || fileExplorer.SelectedItems[0].SubItems[0].Text == "") return;
+            RenameForm renameForm = new RenameForm(this, fileExplorer.SelectedItems[0]);
+            renameForm.Show();
+            this.Enabled = false;
+        }
         
         private void copyButton_Click(object sender, EventArgs e)
         {
@@ -197,57 +228,11 @@ namespace CourseWork_2
                 return;
             }
 
-
-
-            string path;
-            using (var fbd = new FolderBrowserDialog())
-            {
-                DialogResult result = fbd.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    path = fbd.SelectedPath;
-
-                    string showMessage = "";
-                    if (fileExplorer.SelectedItems.Count > 1)
-                    {
-                        showMessage = "Are you sure you want to copy these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
-                        foreach (ListViewItem item in fileExplorer.SelectedItems)
-                        {
-                            showMessage += "\n" + item.SubItems[4].Text;
-                        }
-                    }
-                    else
-                    {
-                        showMessage = "Are you sure you want to copy the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
-
-                    }
-                    showMessage += "\nin: " + path;
-
-                    DialogResult MessageResult = MessageBox.Show(
-                        showMessage,
-                        "Message",
-                        MessageBoxButtons.YesNoCancel,
-                        MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
-
-                    if (MessageResult != DialogResult.Yes) return;
-                }
-                else
-                {
-                    return;
-                    //MessageBox.Show("Some problems with FBD");
-                }
-
-
-            }
-            CopyForm copyForm = new CopyForm(this, Business, fileExplorer.SelectedItems, path);
+            CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+            CopyPresenter copyPresenter = new CopyPresenter(copyForm);
+            copyForm.Show() ;
             this.Enabled = false;
-            copyForm.Show();
-            while (this.Enabled != true) { }
-            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
-            ShowTreeViewFileExplorer();
+            copyForm.Visible = false;
         }
 
         private void moveButton_Click(object sender, EventArgs e)
@@ -258,57 +243,11 @@ namespace CourseWork_2
                 return;
             }
 
-            
-
-            
-            string path;
-            using (var fbd = new FolderBrowserDialog())
-            {
-                DialogResult result = fbd.ShowDialog();
-
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                {
-                    path = fbd.SelectedPath;
-                    
-                    string showMessage = "";
-                    if (fileExplorer.SelectedItems.Count > 1)
-                    {
-                        showMessage = "Are you sure you want to move these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
-                        foreach (ListViewItem item in fileExplorer.SelectedItems)
-                        {
-                            showMessage += "\n" + item.SubItems[4].Text;
-                        }
-                    }
-                    else
-                    {
-                        showMessage = "Are you sure you want to move the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
-
-                    }
-                    showMessage += "\nin: " + path;
-                    DialogResult MessageResult = MessageBox.Show(
-                        showMessage,
-                        "Message",
-                        MessageBoxButtons.YesNoCancel,
-                        MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
-
-                    if (MessageResult != DialogResult.Yes) return;
-                }
-                else
-                {
-                    return;
-                }
-
-
-            }
-
-            MoveForm moveForm = new MoveForm(this, Business, fileExplorer.SelectedItems, path);
-            this.Enabled = false;
+            CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+            MovePresenter movePresenter = new MovePresenter(moveForm);
             moveForm.Show();
-            while (this.Enabled != true) { }
-            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
-            ShowTreeViewFileExplorer();
+            this.Enabled = false;
+            moveForm.Visible = false;
         }
 
         private void dleteButton_Click(object sender, EventArgs e)
@@ -319,39 +258,14 @@ namespace CourseWork_2
                 return;
             }
 
-            string showMessage = "";
-            if (fileExplorer.SelectedItems.Count > 1)
-            {
-                showMessage = "Are you sure you want to delete these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
-                foreach (ListViewItem item in fileExplorer.SelectedItems)
-                {
-                    showMessage += "\n" + item.SubItems[4].Text;
-                }
-            }
-            else
-            {
-                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
-
-            }
-
-            DialogResult result = MessageBox.Show(
-                showMessage,
-                "Message",
-                MessageBoxButtons.YesNoCancel,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button1,
-                MessageBoxOptions.DefaultDesktopOnly);
-
-            if (result != DialogResult.Yes) return;
-
-            DeleteForm deleteForm = new DeleteForm(this, Business, fileExplorer.SelectedItems);
+            CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+            DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
+            deleteForm.Show();
             this.Enabled = false;
-            deleteForm.Show(this);
-
-            ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
-            ShowTreeViewFileExplorer();
+            deleteForm.Visible = false;
 
         }
+
 
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -371,7 +285,11 @@ namespace CourseWork_2
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            if (currentPathTextBox.Text != "Logical disk(*)")
+            refresh();
+        }
+        public void refresh()
+        {
+            if (currentPathTextBox.Text != "computer\\*")
             {
                 ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
             }
@@ -382,6 +300,14 @@ namespace CourseWork_2
 
             ShowTreeViewFileExplorer();
         }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RenameForm renameForm = new RenameForm(this, fileExplorer.SelectedItems[0]);
+            renameForm.Show();
+            this.Enabled = false;
+        }
+
     }
 
 

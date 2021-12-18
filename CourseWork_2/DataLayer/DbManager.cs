@@ -30,7 +30,7 @@ namespace CourseWork_2.DataLayer
         private DbManager()
         {
             ProgramIcons = new ProgramIcons();
-            XmlDocumentPath = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 22) + "CourseWork_2\\Properties\\Images.xml";
+            XmlDocumentPath = Directory.GetCurrentDirectory().Substring(0, Directory.GetCurrentDirectory().Length - 9) + "Properties\\Images.xml";
                 //C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\DataLayer\DbManager.cs
             xDoc = new XmlDocument();
             xDoc.Load(XmlDocumentPath);

@@ -43,7 +43,7 @@ namespace CourseWork_2.BusinessLayer
                 }
                 catch (System.UnauthorizedAccessException e)
                 {
-
+                    continue;
                 }
             }
 
@@ -72,7 +72,7 @@ namespace CourseWork_2.BusinessLayer
                 }
                 catch (System.UnauthorizedAccessException e)
                 {
-
+                    continue;
                 }
             }
 
@@ -137,7 +137,7 @@ namespace CourseWork_2.BusinessLayer
                 }
                 catch (System.UnauthorizedAccessException e)
                 {
-
+                    continue;
                 }
             }
 
@@ -185,7 +185,7 @@ namespace CourseWork_2.BusinessLayer
         }
 
 
-        private bool DeleteDirectory(string filePath)
+        private static bool DeleteDirectory(string filePath)
         {
             try
             {
@@ -197,7 +197,7 @@ namespace CourseWork_2.BusinessLayer
                 return false;
             }
         }
-        private bool DeleteFile(string filePath)
+        private static bool DeleteFile(string filePath)
         {
             try
             {
@@ -209,7 +209,7 @@ namespace CourseWork_2.BusinessLayer
                 return false;
             }
         }
-        public bool Delete(string filePath)
+        public static bool Delete(string filePath)
         {
             if (File.GetAttributes(filePath).HasFlag(FileAttributes.Directory)) return DeleteDirectory(filePath);
             else return DeleteFile(filePath);
@@ -217,7 +217,7 @@ namespace CourseWork_2.BusinessLayer
 
 
 
-        private bool MoveFile(string oldPath, string newPath)
+        private static bool MoveFile(string oldPath, string newPath)
         {
             try
             {
@@ -229,7 +229,7 @@ namespace CourseWork_2.BusinessLayer
                 return false;
             }
         }
-        private bool MoveDirectory(string oldPath, string newPath)
+        private static bool MoveDirectory(string oldPath, string newPath)
         {
             if (newPath.Contains(oldPath)) return false;
             else
@@ -239,7 +239,7 @@ namespace CourseWork_2.BusinessLayer
                 return true;
             }
         }
-        public bool Move(string oldPath, string newPath)
+        public static bool Move(string oldPath, string newPath)
         {
             if (newPath.Contains(oldPath)) return false;
             else
@@ -288,14 +288,15 @@ namespace CourseWork_2.BusinessLayer
                 DirectoryInfo diTarget = new DirectoryInfo(targetDirectory);
                 //DirectoryInfo diTarget = new DirectoryInfo(targetDirectory + "\\" + diSource.Name);
 
+                string directoryName = diSource.Name;
 
+                Foo:
                 foreach (DirectoryInfo dirInfo in diTarget.GetDirectories())
                 {
-                    if (dirInfo.Name == diSource.Name)
+                    if (dirInfo.Name == directoryName)
                     {
-                        Directory.CreateDirectory(diTarget.FullName + "\\" + "(copy)" + diSource.Name);
-                        CopyAll(diSource, diTarget);
-                        return true;
+                        directoryName = "copy-" + diSource.Name;
+                        goto Foo;
                     }
                 }
                 
