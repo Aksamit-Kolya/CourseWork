@@ -18,7 +18,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
             this.Form = Form;
 
             Form.LabelText = "Copy";
-            Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[4].Text;
+            Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[5].Text;
             Form.Shown += CopyForm_Shown;
             Form.FormClosed += CopyForm_FormClosed;
         }
@@ -40,12 +40,12 @@ namespace CourseWork_2.BusinessLayer.Presenters
                         showMessage = "Are you sure you want to copy these files\\directories(" + Form.selectedItems.Count + "):";
                         foreach (ListViewItem item in Form.selectedItems)
                         {
-                            showMessage += "\n" + item.SubItems[4].Text;
+                            showMessage += "\n" + item.SubItems[5].Text;
                         }
                     }
                     else
                     {
-                        showMessage = "Are you sure you want to copy the file\\directory:" + "\n" + Form.selectedItems[0].SubItems[4].Text;
+                        showMessage = "Are you sure you want to copy the file\\directory:" + "\n" + Form.selectedItems[0].SubItems[5].Text;
 
                     }
                     showMessage += "\nin: " + path;
@@ -77,11 +77,11 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 {
                     try
                     {
-                        Form.FileNameTextBoxText = item.SubItems[4].Text;
+                        Form.FileNameTextBoxText = item.SubItems[5].Text;
                         ++Form.ProgressBar.Value;
-                        Business.CopyWithProgressBar(item.SubItems[4].Text, path);
-                        //Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[4].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
-                        //if (!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
+                        Business.CopyWithProgressBar(item.SubItems[5].Text, path);
+                        //Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[5].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
+                        //if (!Business.Copy(item.SubItems[5].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[5].Text);
                     }
                     catch (Exception ex)
                     {
@@ -97,7 +97,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
         private void CopyForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Form.mainForm.Enabled = true;
-            string currentDirectory = Form.selectedItems[0].SubItems[4].Text;
+            string currentDirectory = Form.selectedItems[0].SubItems[5].Text;
             int i = currentDirectory.Length - 1;
             for (; currentDirectory[i] != '\\'; --i) { }
             if (i < 3) Form.mainForm.ShowFiles(currentDirectory.Substring(0, i) + "\\");

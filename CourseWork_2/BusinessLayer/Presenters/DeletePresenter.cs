@@ -17,7 +17,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
             this.Form = Form;
 
             Form.LabelText = "Delete";
-            Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[4].Text;
+            Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[5].Text;
             Form.Shown += DeleteForm_Shown;
             Form.FormClosed += DeleteForm_FormClosed;
         }
@@ -30,12 +30,12 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 showMessage = "Are you sure you want to delete these files\\directories(" + Form.selectedItems.Count + "):";
                 foreach (ListViewItem item in Form.selectedItems)
                 {
-                    showMessage += "\n" + item.SubItems[4].Text;
+                    showMessage += "\n" + item.SubItems[5].Text;
                 }
             }
             else
             {
-                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + Form.selectedItems[0].SubItems[4].Text;
+                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + Form.selectedItems[0].SubItems[5].Text;
 
             }
             Form.Visible = true;
@@ -57,10 +57,10 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 {
                     try
                     {
-                        Form.FileNameTextBoxText = item.SubItems[4].Text;
+                        Form.FileNameTextBoxText = item.SubItems[5].Text;
                         ++Form.ProgressBar.Value;
-                        Business.DeleteWithProgressBar(item.SubItems[4].Text);    
-                    //if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
+                        Business.DeleteWithProgressBar(item.SubItems[5].Text);    
+                    //if (!Business.Delete(item.SubItems[5].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[5].Text);
                     }
                     catch (Exception ex)
                     {
@@ -75,7 +75,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
         private void DeleteForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Form.mainForm.Enabled = true;
-            string currentDirectory = Form.selectedItems[0].SubItems[4].Text;
+            string currentDirectory = Form.selectedItems[0].SubItems[5].Text;
             int i = currentDirectory.Length - 1;
             for (; currentDirectory[i] != '\\'; --i) { }
             if (i < 3) Form.mainForm.ShowFiles(currentDirectory.Substring(0, i) + "\\");

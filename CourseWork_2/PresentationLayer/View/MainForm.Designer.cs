@@ -59,6 +59,7 @@ namespace CourseWork_2
             this.refreshButton = new System.Windows.Forms.Button();
             this.renameButton = new System.Windows.Forms.Button();
             this.createDirectoryButton = new System.Windows.Forms.Button();
+            this.athrebutColomn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -68,7 +69,8 @@ namespace CourseWork_2
             this.nameColumn,
             this.existsColumn,
             this.lengthColumn,
-            this.dateColumn});
+            this.dateColumn,
+            this.athrebutColomn});
             this.fileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.fileExplorer.FullRowSelect = true;
             this.fileExplorer.GridLines = true;
@@ -88,25 +90,25 @@ namespace CourseWork_2
             // 
             this.nameColumn.Tag = "";
             this.nameColumn.Text = "Name";
-            this.nameColumn.Width = 481;
+            this.nameColumn.Width = 448;
             // 
             // existsColumn
             // 
             this.existsColumn.Tag = "";
             this.existsColumn.Text = "Exists";
-            this.existsColumn.Width = 87;
+            this.existsColumn.Width = 64;
             // 
             // lengthColumn
             // 
             this.lengthColumn.Tag = "lengthColumn";
             this.lengthColumn.Text = "Length";
-            this.lengthColumn.Width = 102;
+            this.lengthColumn.Width = 86;
             // 
             // dateColumn
             // 
             this.dateColumn.Tag = "dateColumn";
             this.dateColumn.Text = "Date";
-            this.dateColumn.Width = 176;
+            this.dateColumn.Width = 160;
             // 
             // contextMenuStrip1
             // 
@@ -244,6 +246,11 @@ namespace CourseWork_2
             this.createDirectoryButton.UseVisualStyleBackColor = true;
             this.createDirectoryButton.Click += new System.EventHandler(this.createDirectoryButton_Click);
             // 
+            // athrebutColomn
+            // 
+            this.athrebutColomn.Text = "Athrebut";
+            this.athrebutColomn.Width = 92;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -287,6 +294,7 @@ namespace CourseWork_2
         private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
         private System.Windows.Forms.Button renameButton;
         private System.Windows.Forms.Button createDirectoryButton;
+        private System.Windows.Forms.ColumnHeader athrebutColomn;
     }
 }
 

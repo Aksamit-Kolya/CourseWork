@@ -39,7 +39,7 @@ namespace CourseWork_2.PresentationLayer.View
         public CreateRenameForm(MainForm mainForm, ListViewItem selectedItem)
         {
             InitializeComponent();
-            SelectedFileInfo = new FileInfo(selectedItem.SubItems[4].Text);
+            SelectedFileInfo = new FileInfo(selectedItem.SubItems[5].Text);
             MainForm = mainForm;
         }
 

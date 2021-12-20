@@ -128,12 +128,12 @@ namespace CourseWork_2
 
                 if (fileExplorer.SelectedItems[0].Text == "")
                 {
-                    if(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent == null) ShowLogicalDrives();
-                    else ShowFiles(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent.FullName);
+                    if(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[5].Text).Parent == null) ShowLogicalDrives();
+                    else ShowFiles(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[5].Text).Parent.FullName);
                 }
-                else if (!(fileExplorer.View == View.LargeIcon) && File.GetAttributes(fileExplorer.SelectedItems[0].SubItems[4].Text).HasFlag(FileAttributes.Directory)) ShowFiles(fileExplorer.SelectedItems[0].SubItems[4].Text);
+                else if (!(fileExplorer.View == View.LargeIcon) && File.GetAttributes(fileExplorer.SelectedItems[0].SubItems[5].Text).HasFlag(FileAttributes.Directory)) ShowFiles(fileExplorer.SelectedItems[0].SubItems[5].Text);
                 else if (fileExplorer.View == View.LargeIcon) ShowFiles(fileExplorer.SelectedItems[0].SubItems[0].Text);
-                else System.Diagnostics.Process.Start(fileExplorer.SelectedItems[0].SubItems[4].Text);
+                else System.Diagnostics.Process.Start(fileExplorer.SelectedItems[0].SubItems[5].Text);
             }catch(Exception ex)
             {
                 MessageBox.Show("You don't have access to this!");
@@ -294,7 +294,7 @@ namespace CourseWork_2
             {
                 string path = GetPathFromFileDialog();
 
-                if (path != null) Business.CopyWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text, path);
+                if (path != null) Business.CopyWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
             }
         }
         private void moveButton_Click(object sender, EventArgs e)
@@ -320,7 +320,7 @@ namespace CourseWork_2
             {
                 string path = GetPathFromFileDialog();
 
-                if(path != null) Business.MoveWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text, path);
+                if(path != null) Business.MoveWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
                 refresh();
             }
 
@@ -342,7 +342,7 @@ namespace CourseWork_2
                 showMessage = "Are you sure you want to delete these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
                 foreach (ListViewItem item in fileExplorer.SelectedItems)
                 {
-                    showMessage += "\n" + item.SubItems[4].Text;
+                    showMessage += "\n" + item.SubItems[5].Text;
                 }
 
                 DialogResult result = MessageBox.Show(
@@ -365,7 +365,7 @@ namespace CourseWork_2
             }
             else
             {
-                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[5].Text;
                 DialogResult result = MessageBox.Show(
                     showMessage,
                     "Message",
@@ -376,7 +376,7 @@ namespace CourseWork_2
 
                 if (result != DialogResult.Yes) return;
 
-                Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text);
+                Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text);
                 refresh();
             }
         }
@@ -407,7 +407,7 @@ namespace CourseWork_2
                     path = fbd.SelectedPath;
 
                     string showMessage = "";
-                    showMessage = "Are you sure you want to move the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+                    showMessage = "Are you sure you want to move the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[5].Text;
                     showMessage += "\nin: " + path;
 
                     DialogResult MessageResult = MessageBox.Show(
@@ -453,7 +453,7 @@ namespace CourseWork_2
         {
             if (currentPathTextBox.Text != "computer\\*")
             {
-                ShowFiles(fileExplorer.Items[0].SubItems[4].Text);
+                ShowFiles(fileExplorer.Items[0].SubItems[5].Text);
             }
             else
             {

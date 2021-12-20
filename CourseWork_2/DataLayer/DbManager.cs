@@ -83,7 +83,7 @@ namespace CourseWork_2.DataLayer
                         //image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия (1).jpg");
                         break;
                     case ".exe":
-                        image = ServiceLayer.Service.GetSmallFileIcon(fileExplorer.Items[imageCount].SubItems[4].Text).ToBitmap();
+                        image = ServiceLayer.Service.GetSmallFileIcon(fileExplorer.Items[imageCount].SubItems[5].Text).ToBitmap();
                         break;
                     default:
                         //image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-file-24.png");

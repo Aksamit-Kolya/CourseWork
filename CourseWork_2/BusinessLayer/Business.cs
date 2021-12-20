@@ -89,6 +89,7 @@ namespace CourseWork_2.BusinessLayer
                 item.SubItems.Add("");
                 item.SubItems.Add("<Directory>");
                 item.SubItems.Add(dirInfo.CreationTime.ToString());
+                item.SubItems.Add(dirInfo.Attributes.ToString());
                 item.SubItems.Add(dirInfo.FullName);
                 items.Add(item);
             }
@@ -98,6 +99,7 @@ namespace CourseWork_2.BusinessLayer
                 item.SubItems.Add("");
                 item.SubItems.Add("<Directory>");
                 item.SubItems.Add(dirInfo.CreationTime.ToString());
+                item.SubItems.Add(dirInfo.Attributes.ToString());
                 item.SubItems.Add(dirInfo.FullName);
                 items.Add(item);
             }
@@ -108,6 +110,7 @@ namespace CourseWork_2.BusinessLayer
                 item.SubItems.Add(fileInfo.Extension);
                 item.SubItems.Add(fileInfo.Length.ToString());
                 item.SubItems.Add(fileInfo.CreationTime.ToString());
+                item.SubItems.Add(fileInfo.Attributes.ToString());
                 item.SubItems.Add(fileInfo.FullName);
                 items.Add(item);
             }
