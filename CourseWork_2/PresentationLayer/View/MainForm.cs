@@ -266,9 +266,10 @@ namespace CourseWork_2
             CreateRenameForm renameForm = new CreateRenameForm(this, fileExplorer.SelectedItems[0]);
             new RenamePresenter(renameForm);
             renameForm.Show();
+            renameForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
+                          (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2); 
             this.Enabled = false;
         }
-        
         private void copyButton_Click(object sender, EventArgs e)
         {
             if (fileExplorer.SelectedItems.Count == 0 
@@ -278,14 +279,23 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
+            if (fileExplorer.SelectedItems.Count > 1)
+            {
+                CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+                CopyPresenter copyPresenter = new CopyPresenter(copyForm);
+                copyForm.Show();
+                copyForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
+                          (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
+                //moveForm.Visible = false;
+                this.Enabled = false;
+            }
+            else
+            {
+                string path = GetPathFromFileDialog();
 
-            CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
-            CopyPresenter copyPresenter = new CopyPresenter(copyForm);
-            copyForm.Show();
-            copyForm.Visible = false;
-            this.Enabled = false;
+                if (path != null) Business.CopyWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text, path);
+            }
         }
-
         private void moveButton_Click(object sender, EventArgs e)
         {
             if (fileExplorer.SelectedItems.Count == 0 
@@ -295,14 +305,26 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
+            if(fileExplorer.SelectedItems.Count > 1)
+            {
+                CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+                MovePresenter movePresenter = new MovePresenter(moveForm);
+                moveForm.Show();
+                moveForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
+                          (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
+                //moveForm.Visible = false;
+                this.Enabled = false;
+            }
+            else
+            {
+                string path = GetPathFromFileDialog();
 
-            CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
-            MovePresenter movePresenter = new MovePresenter(moveForm);
-            moveForm.Show();
-            moveForm.Visible = false;
-            this.Enabled = false;
+                if(path != null) Business.MoveWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text, path);
+                refresh();
+            }
+
+
         }
-
         private void dleteButton_Click(object sender, EventArgs e)
         {
             if (fileExplorer.SelectedItems.Count == 0 
@@ -313,12 +335,21 @@ namespace CourseWork_2
                 return;
             }
 
-            CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
-            DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
-            deleteForm.Show();
-            deleteForm.Visible = false;
-            this.Enabled = false;
-
+            if (fileExplorer.SelectedItems.Count > 1)
+            {
+                CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
+                DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
+                deleteForm.Show();
+                deleteForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
+                          (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
+                //moveForm.Visible = false;
+                this.Enabled = false;
+            }
+            else
+            {
+                Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text);
+                refresh();
+            }
         }
         private void createDirectoryButton_Click(object sender, EventArgs e)
         {
@@ -330,7 +361,42 @@ namespace CourseWork_2
             CreateRenameForm createForm = new CreateRenameForm(this, fileExplorer.Items[0]);
             new CreateDirectoryPresenter(createForm);
             createForm.Show();
+            createForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
+                          (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
             this.Enabled = false;
+        }
+        
+        private string GetPathFromFileDialog()
+        {
+            string path;
+            using (var fbd = new FolderBrowserDialog())
+            {
+                DialogResult result = fbd.ShowDialog();
+
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    path = fbd.SelectedPath;
+
+                    string showMessage = "";
+                    showMessage = "Are you sure you want to move the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+                    showMessage += "\nin: " + path;
+
+                    DialogResult MessageResult = MessageBox.Show(
+                        showMessage,
+                        "Message",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Question,
+                        MessageBoxDefaultButton.Button1/*,
+                        MessageBoxOptions.DefaultDesktopOnly*/);
+
+                    if (MessageResult != DialogResult.Yes) return null;
+                }
+                else
+                {
+                    return null;
+                }
+                return path;
+            }
         }
 
 

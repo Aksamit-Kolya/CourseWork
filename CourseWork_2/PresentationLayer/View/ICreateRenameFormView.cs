@@ -27,7 +27,7 @@ namespace CourseWork_2.PresentationLayer.View
         Label ErrorLabel { get; }
         Label Label { get; }
         TextBox TextBox { get; }
-        
+        Button Button { get; }
         void Close();
     }
 }

@@ -107,7 +107,15 @@ namespace CourseWork_2.ServiceLayer
             }
 
         }
+        public static bool isDirectory(string path)
+        {
+            FileAttributes attr = File.GetAttributes(path);
 
+            if ((attr & FileAttributes.Directory) == FileAttributes.Directory)
+                return true;
+            else
+                return false;
+        }
 
         public static bool IsPathValidRootedLocal(String pathString)
         {

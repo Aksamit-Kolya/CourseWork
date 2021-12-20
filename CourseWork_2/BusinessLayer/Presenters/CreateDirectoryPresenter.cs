@@ -16,6 +16,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
         {
             Form = form;
             Form.Label.Text = "Name";
+            Form.Button.Text = "Create";
 
             Form.TextBox_TextChangedEvent = textBox_TextChanged;
             Form.OkButton_ClickEvent = okButton_Click;

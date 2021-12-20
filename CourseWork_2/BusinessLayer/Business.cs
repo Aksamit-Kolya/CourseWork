@@ -1,4 +1,5 @@
 ﻿using CourseWork_2.DataLayer;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -225,7 +226,17 @@ namespace CourseWork_2.BusinessLayer
             if (File.GetAttributes(filePath).HasFlag(FileAttributes.Directory)) return DeleteDirectory(filePath);
             else return DeleteFile(filePath);
         }
-
+        public static void DeleteWithProgressBar(string Path)
+        {
+            if (ServiceLayer.Service.isDirectory(Path))
+            {
+                FileSystem.DeleteDirectory(Path, UIOption.AllDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+            }
+            else
+            {
+                FileSystem.DeleteFile(Path, UIOption.AllDialogs, RecycleOption.SendToRecycleBin, UICancelOption.DoNothing);
+            }
+        }
 
 
         private static bool MoveFile(string oldPath, string newPath)
@@ -261,6 +272,17 @@ namespace CourseWork_2.BusinessLayer
             }
             /* if (File.GetAttributes(oldPath).HasFlag(FileAttributes.Directory)) return MoveDirectory(oldPath, newPath);
              else return MoveFile(oldPath, newPath);*/
+        }
+        public static void MoveWithProgressBar(string oldPath, string newPath)
+        {
+            if (ServiceLayer.Service.isDirectory(oldPath))
+            {
+                FileSystem.MoveDirectory(oldPath, newPath + "\\" + new DirectoryInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+            }
+            else
+            {
+                FileSystem.MoveFile(oldPath, newPath + "\\" + new FileInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+            }
         }
 
 
@@ -352,15 +374,28 @@ namespace CourseWork_2.BusinessLayer
         public static void _CopyFilesRecursively(string sourcePath, string targetPath)
         {
             //Now Create all of the directories
-            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", SearchOption.AllDirectories))
+            foreach (string dirPath in Directory.GetDirectories(sourcePath, "*", System.IO.SearchOption.AllDirectories))
             {
                 Directory.CreateDirectory(dirPath.Replace(sourcePath, targetPath));
             }
 
             //Copy all the files & Replaces any files with the same name
-            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", SearchOption.AllDirectories))
+            foreach (string newPath in Directory.GetFiles(sourcePath, "*.*", System.IO.SearchOption.AllDirectories))
             {
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
+            }
+        }
+        public static void CopyWithProgressBar(string oldPath, string newPath)
+        {
+                
+            if (ServiceLayer.Service.isDirectory(oldPath))
+            {
+                FileSystem.CopyDirectory(oldPath, newPath + "\\" + new DirectoryInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+            }
+            else
+            {
+                FileSystem.CopyFile(oldPath, newPath + "\\" + new FileInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+                
             }
         }
 

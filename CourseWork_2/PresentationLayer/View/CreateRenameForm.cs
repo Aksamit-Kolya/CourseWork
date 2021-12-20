@@ -33,6 +33,7 @@ namespace CourseWork_2.PresentationLayer.View
         public Label ErrorLabel { get => errorlabel; }
         public Label Label { get => label2; }
         public TextBox TextBox { get => textBox; }
+        public Button Button { get => okButton; }
 
 
         public CreateRenameForm(MainForm mainForm, ListViewItem selectedItem)

@@ -39,15 +39,15 @@ namespace CourseWork_2.BusinessLayer.Presenters
 
             }
             Form.Visible = true;
-            DialogResult result = MessageBox.Show(
+/*            DialogResult result = MessageBox.Show(
                 showMessage,
                 "Message",
                 MessageBoxButtons.YesNoCancel,
                 MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button1/*,
-                MessageBoxOptions.DefaultDesktopOnly*/);
+                MessageBoxDefaultButton.Button1*//*,
+                MessageBoxOptions.DefaultDesktopOnly*//*);
 
-            if (result != DialogResult.Yes) return;
+            if (result != DialogResult.Yes) return;*/
 
 
             //MessageBox.Show("ABA");
@@ -58,8 +58,9 @@ namespace CourseWork_2.BusinessLayer.Presenters
                     try
                     {
                         Form.FileNameTextBoxText = item.SubItems[4].Text;
-                        if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
                         ++Form.ProgressBar.Value;
+                        Business.DeleteWithProgressBar(item.SubItems[4].Text);    
+                    //if (!Business.Delete(item.SubItems[4].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[4].Text);
                     }
                     catch (Exception ex)
                     {

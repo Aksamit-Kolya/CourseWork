@@ -51,15 +51,15 @@ namespace CourseWork_2.BusinessLayer.Presenters
                     showMessage += "\nin: " + path;
                     
                     Form.Visible = true;
-                    DialogResult MessageResult = MessageBox.Show(
+/*                    DialogResult MessageResult = MessageBox.Show(
                         showMessage,
                         "Message",
                         MessageBoxButtons.YesNoCancel,
                         MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1/*,
-                        MessageBoxOptions.DefaultDesktopOnly*/);
+                        MessageBoxDefaultButton.Button1*//*,
+                        MessageBoxOptions.DefaultDesktopOnly*//*);
 
-                    if (MessageResult != DialogResult.Yes) return;
+                    if (MessageResult != DialogResult.Yes) return;*/
                 }
                 else
                 {
@@ -77,10 +77,11 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 {
                     try
                     {
-                        Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[4].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
-                        /*Form.FileNameTextBoxText = item.SubItems[4].Text;
-                        if (!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
-                        ++Form.ProgressBar.Value;*/
+                        Form.FileNameTextBoxText = item.SubItems[4].Text;
+                        ++Form.ProgressBar.Value;
+                        Business.CopyWithProgressBar(item.SubItems[4].Text, path);
+                        //Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[4].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
+                        //if (!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
                     }
                     catch (Exception ex)
                     {
