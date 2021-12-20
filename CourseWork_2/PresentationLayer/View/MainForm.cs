@@ -281,6 +281,7 @@ namespace CourseWork_2
             }
             if (fileExplorer.SelectedItems.Count > 1)
             {
+            
                 CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
                 CopyPresenter copyPresenter = new CopyPresenter(copyForm);
                 copyForm.Show();
@@ -334,9 +335,26 @@ namespace CourseWork_2
                 MessageBox.Show("Select file\\directory");
                 return;
             }
-
+            string showMessage = "";
             if (fileExplorer.SelectedItems.Count > 1)
             {
+
+                showMessage = "Are you sure you want to delete these files\\directories(" + fileExplorer.SelectedItems.Count + "):";
+                foreach (ListViewItem item in fileExplorer.SelectedItems)
+                {
+                    showMessage += "\n" + item.SubItems[4].Text;
+                }
+
+                DialogResult result = MessageBox.Show(
+                    showMessage,
+                    "Message",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1/*,
+                    MessageBoxOptions.DefaultDesktopOnly*/);
+
+                if (result != DialogResult.Yes) return;
+
                 CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
                 DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
                 deleteForm.Show();
@@ -347,6 +365,17 @@ namespace CourseWork_2
             }
             else
             {
+                showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + fileExplorer.SelectedItems[0].SubItems[4].Text;
+                DialogResult result = MessageBox.Show(
+                    showMessage,
+                    "Message",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question,
+                    MessageBoxDefaultButton.Button1/*,
+                    MessageBoxOptions.DefaultDesktopOnly*/);
+
+                if (result != DialogResult.Yes) return;
+
                 Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[4].Text);
                 refresh();
             }
