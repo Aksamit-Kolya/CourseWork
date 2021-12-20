@@ -171,10 +171,25 @@ namespace CourseWork_2
             {
                 foreach(TreeNode node in e.Node.Nodes)
                 {
-                    foreach(DirectoryInfo dirInfo in Business.GetDirectoriesInfo(Service.GetFullPathForNode(node)))
+                    /*                    foreach(DirectoryInfo dirInfo in Business.GetDirectoriesInfo(Service.GetFullPathForNode(node)))
+                                        {
+                                            node.Nodes.Add(dirInfo.Name, dirInfo.Name, 1, 1);
+                                        }*/
+                    try
                     {
-                        node.Nodes.Add(dirInfo.Name, dirInfo.Name, 1, 1);
+                        List<string> Directoryes = Business.GetDirectories(Service.GetFullPathForNode(node));
+                    
+                        foreach(string dirName in Directoryes)
+                        {
+                            DirectoryInfo directoryInfo = new DirectoryInfo(dirName);
+                            node.Nodes.Add(directoryInfo.Name, directoryInfo.Name, 1, 1);
+                        }
                     }
+                    catch (Exception ex)
+                    {
+                        continue;
+                    }
+
                 }
             }
             
@@ -185,8 +200,18 @@ namespace CourseWork_2
 
         private void treeViewFileExplorer_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            if (treeViewFileExplorer.SelectedNode.Parent == null) ShowFiles(Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\");
-            else ShowFiles(Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode));
+            string selectedDirectoryPath = null;
+            try
+            {
+                if (treeViewFileExplorer.SelectedNode.Parent == null) selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\";
+                else selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode);
+                ShowFiles(selectedDirectoryPath);
+
+            }catch(Exception ex)
+            {
+                MessageBox.Show("You don't have accef for it");
+                ShowFiles(Directory.GetParent(selectedDirectoryPath).FullName);
+            }
         }
 
 
@@ -239,9 +264,9 @@ namespace CourseWork_2
 
             CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             CopyPresenter copyPresenter = new CopyPresenter(copyForm);
-            copyForm.Show() ;
+            copyForm.Show();
             copyForm.Visible = false;
-            //this.Enabled = false;
+            this.Enabled = false;
         }
 
         private void moveButton_Click(object sender, EventArgs e)
@@ -255,7 +280,7 @@ namespace CourseWork_2
             CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             MovePresenter movePresenter = new MovePresenter(moveForm);
             moveForm.Show();
-            //this.Enabled = false;
+            this.Enabled = false;
             moveForm.Visible = false;
         }
 
@@ -270,8 +295,8 @@ namespace CourseWork_2
             CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
             deleteForm.Show();
-            //this.Enabled = false;
             deleteForm.Visible = false;
+            this.Enabled = false;
 
         }
 

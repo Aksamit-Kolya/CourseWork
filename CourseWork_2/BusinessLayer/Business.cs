@@ -139,6 +139,10 @@ namespace CourseWork_2.BusinessLayer
                 {
                     continue;
                 }
+                catch (Exception e)
+                {
+                    continue;
+                }
             }
 
             return directoryNames;
@@ -295,13 +299,13 @@ namespace CourseWork_2.BusinessLayer
                 {
                     if (dirInfo.Name == directoryName)
                     {
-                        directoryName = "copy-" + diSource.Name;
+                        directoryName = "copy-" + directoryName;
                         goto Foo;
                     }
                 }
                 
-                Directory.CreateDirectory(diTarget.FullName + "\\" + diSource.Name);
-                CopyAll(diSource, diTarget);
+                //Directory.CreateDirectory(diTarget.FullName + "\\" + diSource.Name);
+                CopyAll(diSource, Directory.CreateDirectory(diTarget.FullName + "\\" + directoryName));
 
                 return true;
             }

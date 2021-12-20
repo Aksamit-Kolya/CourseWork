@@ -54,8 +54,8 @@ namespace CourseWork_2.BusinessLayer.Presenters
                         "Message",
                         MessageBoxButtons.YesNoCancel,
                         MessageBoxIcon.Question,
-                        MessageBoxDefaultButton.Button1,
-                        MessageBoxOptions.DefaultDesktopOnly);
+                        MessageBoxDefaultButton.Button1/*,
+                        MessageBoxOptions.DefaultDesktopOnly*/);
 
                     if (MessageResult != DialogResult.Yes) return;
                 }
