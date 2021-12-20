@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -136,7 +138,69 @@ namespace CourseWork_2.ServiceLayer
         public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref SHFILEINFO psfi, uint cbSizeFileInfo, uint uFlags);
 
     }
-    
+    class Monitor
+    {
+        private List<string> _filePaths;
+        public void CreateWatcher(string path)
+        {
+            FileSystemWatcher watcher = new FileSystemWatcher();
+
+            watcher.Filter = "*.*";
+
+            watcher.Created += new
+            FileSystemEventHandler(watcher_FileCreated);
+
+            watcher.Path = path;
+            watcher.IncludeSubdirectories = true;
+
+            watcher.EnableRaisingEvents = true;
+        }
+
+        void watcher_FileCreated(object sender, FileSystemEventArgs e)
+        {
+            //_filePaths.Add(e.FullPath);
+            MessageBox.Show("Files have been created or moved! ---> " + e.FullPath);
+        }
+
+    }
+
+    public class InsertRemovedDeviceMonitor
+    {
+        private void DeviceInsertedEvent(object sender, EventArrivedEventArgs e)
+        {
+            ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            foreach (var property in instance.Properties)
+            {
+                Console.WriteLine(property.Name + " = " + property.Value);
+            }
+        }
+
+        private void DeviceRemovedEvent(object sender, EventArrivedEventArgs e)
+        {
+            ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+            foreach (var property in instance.Properties)
+            {
+                Console.WriteLine(property.Name + " = " + property.Value);
+            }
+        }
+
+        public InsertRemovedDeviceMonitor(EventArrivedEventHandler InsertEvent, EventArrivedEventHandler RemovedEvent)
+        {
+            WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_USBHub'");
+
+            ManagementEventWatcher insertWatcher = new ManagementEventWatcher(insertQuery);
+            insertWatcher.EventArrived += InsertEvent;
+            insertWatcher.Start();
+
+            WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_USBHub'");
+            ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
+            removeWatcher.EventArrived += RemovedEvent;
+            removeWatcher.Start();
+
+            // Do something while waiting for events
+            //System.Threading.Thread.Sleep(20000000);
+        }
+    }
 }
     namespace System.IO
     {
@@ -148,3 +212,4 @@ namespace CourseWork_2.ServiceLayer
             }
         }
     }
+

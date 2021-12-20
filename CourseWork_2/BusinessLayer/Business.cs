@@ -352,5 +352,11 @@ namespace CourseWork_2.BusinessLayer
                 File.Copy(newPath, newPath.Replace(sourcePath, targetPath), true);
             }
         }
+
+        public static void CreateDirectory(string name)
+        {
+            Directory.CreateDirectory(name);
+        }
+
     }
 }

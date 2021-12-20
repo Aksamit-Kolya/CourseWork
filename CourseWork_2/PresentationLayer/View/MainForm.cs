@@ -22,6 +22,7 @@ namespace CourseWork_2
 
         Business Business;
         Monitor Monitor = new Monitor();
+        InsertRemovedDeviceMonitor DeviceMonitor;
         public MainForm(Business business)
         {
 
@@ -37,7 +38,14 @@ namespace CourseWork_2
             refreshButton.ImageList = Business.GetImageForRefreshButton();
             refreshButton.ImageIndex = 0;
 
-            ShowTreeViewFileExplorer();            
+            ShowTreeViewFileExplorer();
+
+            Action action = () =>
+            {
+                refresh();
+            };
+            DeviceMonitor = new InsertRemovedDeviceMonitor((o, e) => Invoke(action), (o, e) => Invoke(action));
+            
         }
         public void ShowTreeViewFileExplorer()
         {
@@ -63,7 +71,7 @@ namespace CourseWork_2
                 treeViewFileExplorer.Nodes.Add(node);
             }
 
-            foreach(string expandedNodeName in expandedNodes)
+            foreach (string expandedNodeName in expandedNodes)
             {
                 Service.expandNodePath(Service.FindNodeByName(treeViewFileExplorer.Nodes, expandedNodeName));
             }
@@ -215,7 +223,8 @@ namespace CourseWork_2
                 return;
             }
             if (fileExplorer.SelectedItems[0].SubItems.Count < 2 || fileExplorer.SelectedItems[0].SubItems[0].Text == "") return;
-            RenameForm renameForm = new RenameForm(this, fileExplorer.SelectedItems[0]);
+            CreateRenameForm renameForm = new CreateRenameForm(this, fileExplorer.SelectedItems[0]);
+            new RenamePresenter(renameForm);
             renameForm.Show();
             this.Enabled = false;
         }
@@ -231,8 +240,8 @@ namespace CourseWork_2
             CopyMoveDeleteForm copyForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             CopyPresenter copyPresenter = new CopyPresenter(copyForm);
             copyForm.Show() ;
-            this.Enabled = false;
             copyForm.Visible = false;
+            //this.Enabled = false;
         }
 
         private void moveButton_Click(object sender, EventArgs e)
@@ -246,7 +255,7 @@ namespace CourseWork_2
             CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             MovePresenter movePresenter = new MovePresenter(moveForm);
             moveForm.Show();
-            this.Enabled = false;
+            //this.Enabled = false;
             moveForm.Visible = false;
         }
 
@@ -261,11 +270,10 @@ namespace CourseWork_2
             CopyMoveDeleteForm deleteForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             DeletePresenter deletePresenter = new DeletePresenter(deleteForm);
             deleteForm.Show();
-            this.Enabled = false;
+            //this.Enabled = false;
             deleteForm.Visible = false;
 
         }
-
 
 
         private void copyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -287,7 +295,8 @@ namespace CourseWork_2
         {
             refresh();
         }
-        public void refresh()
+
+        public  void refresh()
         {
             if (currentPathTextBox.Text != "computer\\*")
             {
@@ -297,44 +306,29 @@ namespace CourseWork_2
             {
                 ShowLogicalDrives();
             }
-
             ShowTreeViewFileExplorer();
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RenameForm renameForm = new RenameForm(this, fileExplorer.SelectedItems[0]);
-            renameForm.Show();
+            renameButton_Click(sender, e);
+        }
+
+        public ListView GetFileExplirer()
+        {
+            return fileExplorer;
+        }
+
+        private void createDirectoryButton_Click(object sender, EventArgs e)
+        {
+            CreateRenameForm createForm = new CreateRenameForm(this, fileExplorer.Items[0]);
+            new CreateDirectoryPresenter(createForm);
+            createForm.Show();
             this.Enabled = false;
         }
-
     }
 
 
-    class Monitor
-    {
-        private List<string> _filePaths;
-        public void CreateWatcher(string path)
-        {
-            FileSystemWatcher watcher = new FileSystemWatcher();
-
-            watcher.Filter = "*.*";
-
-            watcher.Created += new
-            FileSystemEventHandler(watcher_FileCreated);
-
-            watcher.Path = path;
-            watcher.IncludeSubdirectories = true;
-
-            watcher.EnableRaisingEvents = true;
-        }
-
-        void watcher_FileCreated(object sender, FileSystemEventArgs e)
-        {
-            //_filePaths.Add(e.FullPath);
-            MessageBox.Show("Files have been created or moved! ---> " + e.FullPath);
-        }
-
-    }
+    
 }
 

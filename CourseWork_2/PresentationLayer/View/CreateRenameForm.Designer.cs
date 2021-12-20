@@ -1,7 +1,7 @@
 ﻿
 namespace CourseWork_2.PresentationLayer.View
 {
-    partial class RenameForm
+    partial class CreateRenameForm
     {
         /// <summary>
         /// Required designer variable.
@@ -44,7 +44,6 @@ namespace CourseWork_2.PresentationLayer.View
             this.okButton.TabIndex = 0;
             this.okButton.Text = "Rename";
             this.okButton.UseVisualStyleBackColor = true;
-            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
             // channelButton
             // 
@@ -54,7 +53,6 @@ namespace CourseWork_2.PresentationLayer.View
             this.channelButton.TabIndex = 1;
             this.channelButton.Text = "Channel";
             this.channelButton.UseVisualStyleBackColor = true;
-            this.channelButton.Click += new System.EventHandler(this.channelButton_Click);
             // 
             // textBox
             // 
@@ -62,7 +60,6 @@ namespace CourseWork_2.PresentationLayer.View
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(313, 22);
             this.textBox.TabIndex = 4;
-            this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // label2
             // 
@@ -84,7 +81,7 @@ namespace CourseWork_2.PresentationLayer.View
             this.errorlabel.Text = "*This name is already used!";
             this.errorlabel.Visible = false;
             // 
-            // RenameForm
+            // CreateRenameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -94,9 +91,8 @@ namespace CourseWork_2.PresentationLayer.View
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.channelButton);
             this.Controls.Add(this.okButton);
-            this.Name = "RenameForm";
+            this.Name = "CreateRenameForm";
             this.Text = "RenameForm";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RenameForm_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

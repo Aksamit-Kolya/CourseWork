@@ -18,6 +18,7 @@ namespace CourseWork_2.DataLayer
         void AddImageToDb(string ImageKey, Image image);
         ProgramIcons GetImages();
         Image GetImage(string imageName);
-
+        DirectoryInfo GetDirectoryInfo(string name);
+        FileInfo GetFileInfo(string name);
     }
 }

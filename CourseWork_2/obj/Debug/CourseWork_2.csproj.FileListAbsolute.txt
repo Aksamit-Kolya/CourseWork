@@ -12,4 +12,4 @@ C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.M
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.CopyForm.resources
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.MoveForm.resources
 C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.View.CopyMoveDeleteForm.resources
-C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.View.RenameForm.resources
+C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\obj\Debug\CourseWork_2.PresentationLayer.View.CreateRenameForm.resources

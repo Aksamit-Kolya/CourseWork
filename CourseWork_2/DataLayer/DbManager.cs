@@ -48,6 +48,14 @@ namespace CourseWork_2.DataLayer
             throw new NotImplementedException();
             
         }
+        public DirectoryInfo GetDirectoryInfo(string name)
+        {
+            return new DirectoryInfo(name);
+        }
+        public FileInfo GetFileInfo(string name)
+        {
+            return new FileInfo(name);
+        }
 
         public ImageList GetImagesForFileExplorer(ListView fileExplorer)
         {
