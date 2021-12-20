@@ -33,7 +33,6 @@ namespace CourseWork_2.BusinessLayer
                     while (it.MoveNext())
                     {
                         FileInfo fileInf = new FileInfo(it.Current);
-                        
                         if (!fileInf.Attributes.HasFlag(FileAttributes.Hidden)
                             &&
                             !fileInf.Attributes.HasFlag(FileAttributes.System)) fileInfos.Add(fileInf);
@@ -62,7 +61,7 @@ namespace CourseWork_2.BusinessLayer
                     while (it.MoveNext())
                     {
                         DirectoryInfo fileInf = new DirectoryInfo(it.Current);
-
+                        //fileInf.GetFiles();
                         if (!fileInf.Attributes.HasFlag(FileAttributes.Hidden)
                             &&
                             !fileInf.Attributes.HasFlag(FileAttributes.System)) directoryInfos.Add(fileInf);
@@ -94,7 +93,7 @@ namespace CourseWork_2.BusinessLayer
             }
             foreach (DirectoryInfo dirInfo in GetDirectoriesInfo(directoryPath))
             {
-                ListViewItem item = new ListViewItem(dirInfo.Name);
+                ListViewItem item = new ListViewItem(" " + dirInfo.Name);
                 item.SubItems.Add("");
                 item.SubItems.Add("<Directory>");
                 item.SubItems.Add(dirInfo.CreationTime.ToString());
@@ -104,7 +103,7 @@ namespace CourseWork_2.BusinessLayer
 
             foreach (FileInfo fileInfo in GetFilesInfo(directoryPath))
             {
-                ListViewItem item = new ListViewItem(fileInfo.Name);
+                ListViewItem item = new ListViewItem(" " + fileInfo.Name);
                 item.SubItems.Add(fileInfo.Extension);
                 item.SubItems.Add(fileInfo.Length.ToString());
                 item.SubItems.Add(fileInfo.CreationTime.ToString());
@@ -154,7 +153,7 @@ namespace CourseWork_2.BusinessLayer
             foreach(string driveName in Directory.GetLogicalDrives())
             {
                 DriveInfo driveInfo = new DriveInfo(driveName);
-                ListViewItem listViewItem = new ListViewItem(driveInfo.Name);
+                ListViewItem listViewItem = new ListViewItem(driveInfo.Name/*driveInfo.Name.Substring(0, driveInfo.Name.Length - 1)*/);
                 listViewItems.Add(listViewItem);
             }
 
@@ -169,9 +168,17 @@ namespace CourseWork_2.BusinessLayer
         public ImageList GetImageForDrivers()
         {
             ImageList imageList = new ImageList();
+            imageList.Images.Add(dbManager.GetImage("newDriveImage"));
+            //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
+            imageList.ImageSize = new Size(50, 60);
+            return imageList;
+        }
+        public ImageList GetTreeViewImageForDrivers()
+        {
+            ImageList imageList = new ImageList();
             imageList.Images.Add(dbManager.GetImage("driveImage"));
             //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
-            imageList.ImageSize = new Size(45, 45);
+            imageList.ImageSize = new Size(60, 60);
             return imageList;
         }
         public ImageList GetImageForRefreshButton()
@@ -248,7 +255,7 @@ namespace CourseWork_2.BusinessLayer
             if (newPath.Contains(oldPath)) return false;
             else
             {
-                Copy(oldPath, newPath);
+                if(!Copy(oldPath, newPath)) return false;
                 Delete(oldPath);
                 return true;
             }
@@ -360,6 +367,10 @@ namespace CourseWork_2.BusinessLayer
         public static void CreateDirectory(string name)
         {
             Directory.CreateDirectory(name);
+        }
+        public static bool HasAccessToDirectory(string directoryName)
+        {
+            return Directory.Exists(directoryName);
         }
 
     }

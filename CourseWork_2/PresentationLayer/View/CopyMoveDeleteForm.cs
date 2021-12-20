@@ -26,7 +26,6 @@ namespace CourseWork_2.PresentationLayer.View
         public CopyMoveDeleteForm(MainForm mainForm, ListView.SelectedListViewItemCollection selectedItems)
         {
             InitializeComponent();
-
             this.MainForm = mainForm;
             this.SelectedItems = selectedItems;
         }

@@ -20,5 +20,7 @@ namespace CourseWork_2.PresentationLayer.View
         ProgressBar ProgressBar { get; }
         string LabelText { get; set; }
         string FileNameTextBoxText { get; set; }
+        bool Visible { get; set; }
+
     }
 }

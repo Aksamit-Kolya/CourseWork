@@ -38,7 +38,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 showMessage = "Are you sure you want to delete the file\\directory:" + "\n" + Form.selectedItems[0].SubItems[4].Text;
 
             }
-
+            Form.Visible = true;
             DialogResult result = MessageBox.Show(
                 showMessage,
                 "Message",

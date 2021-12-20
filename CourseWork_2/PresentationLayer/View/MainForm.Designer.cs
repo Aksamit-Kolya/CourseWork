@@ -30,16 +30,16 @@ namespace CourseWork_2
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("testFile");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode7});
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("aba");
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("testFile");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode1});
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("aba");
             this.fileExplorer = new System.Windows.Forms.ListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.existsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -69,15 +69,15 @@ namespace CourseWork_2
             this.existsColumn,
             this.lengthColumn,
             this.dateColumn});
-            this.fileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.fileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.fileExplorer.FullRowSelect = true;
             this.fileExplorer.GridLines = true;
             this.fileExplorer.HideSelection = false;
             this.fileExplorer.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
             this.fileExplorer.Location = new System.Drawing.Point(310, 64);
             this.fileExplorer.Name = "fileExplorer";
-            this.fileExplorer.Size = new System.Drawing.Size(856, 536);
+            this.fileExplorer.Size = new System.Drawing.Size(856, 574);
             this.fileExplorer.TabIndex = 0;
             this.fileExplorer.UseCompatibleStateImageBehavior = false;
             this.fileExplorer.View = System.Windows.Forms.View.Details;
@@ -152,22 +152,22 @@ namespace CourseWork_2
             this.treeViewFileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 64);
             this.treeViewFileExplorer.Name = "treeViewFileExplorer";
-            treeNode7.Name = "Node6";
-            treeNode7.Text = "abacaba";
-            treeNode8.Name = "Node4";
-            treeNode8.Text = "aba";
-            treeNode9.Name = "Node1";
-            treeNode9.Text = "test";
-            treeNode10.Name = "Node5";
-            treeNode10.Text = "abacaba";
-            treeNode11.Name = "Node2";
-            treeNode11.Text = "aba";
-            treeNode12.Name = "Node3";
-            treeNode12.Text = "aba";
+            treeNode1.Name = "Node6";
+            treeNode1.Text = "abacaba";
+            treeNode2.Name = "Node4";
+            treeNode2.Text = "aba";
+            treeNode3.Name = "Node1";
+            treeNode3.Text = "test";
+            treeNode4.Name = "Node5";
+            treeNode4.Text = "abacaba";
+            treeNode5.Name = "Node2";
+            treeNode5.Text = "aba";
+            treeNode6.Name = "Node3";
+            treeNode6.Text = "aba";
             this.treeViewFileExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode11,
-            treeNode12});
+            treeNode3,
+            treeNode5,
+            treeNode6});
             this.treeViewFileExplorer.Size = new System.Drawing.Size(249, 369);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);

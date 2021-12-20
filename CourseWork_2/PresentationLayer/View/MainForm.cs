@@ -32,13 +32,13 @@ namespace CourseWork_2
 
 
             ShowLogicalDrives();
+            ShowTreeViewFileExplorer();
             //Monitor.CreateWatcher(@"C:\");
 
 
             refreshButton.ImageList = Business.GetImageForRefreshButton();
             refreshButton.ImageIndex = 0;
 
-            ShowTreeViewFileExplorer();
 
             Action action = () =>
             {
@@ -54,7 +54,7 @@ namespace CourseWork_2
             treeViewFileExplorer.Nodes.Clear();
             
             ImageList images = new ImageList();
-            images.Images.Add(Business.GetImageForDrivers().Images[0]);
+            images.Images.Add(Business.GetTreeViewImageForDrivers().Images[0]);
             images.Images.Add(Business.GetImageForDirectory());
             treeViewFileExplorer.ImageList = images;
 
@@ -79,13 +79,22 @@ namespace CourseWork_2
 
         public void ShowFiles(string directoryPath)
         {
-            currentPathTextBox.Text = directoryPath + "\\*";
+            try
+            {
 
-            fileExplorer.Items.Clear();
-            fileExplorer.View = View.Details;
-            fileExplorer.Items.AddRange(Business.GetFileRecords(directoryPath).ToArray());
-            ShowIcons();
 
+                List<ListViewItem> items = Business.GetFileRecords(directoryPath);
+                fileExplorer.View = View.Details;
+                fileExplorer.Items.Clear();
+                fileExplorer.Items.AddRange(items.ToArray());
+                currentPathTextBox.Text = directoryPath + "\\*";
+                ShowIcons();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("You don't have access to this directory!");
+                return;
+            }
         }
 
         private void ShowLogicalDrives()
@@ -113,17 +122,23 @@ namespace CourseWork_2
 
         private void fileExplorer_DoubleClick(object sender, EventArgs e)
         {
-            
-            if (fileExplorer.SelectedItems.Count == 0) return;
-
-            if (fileExplorer.SelectedItems[0].Text == "")
+            try
             {
-                if(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent == null) ShowLogicalDrives();
-                else ShowFiles(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent.FullName);
+                if (fileExplorer.SelectedItems.Count == 0) return;
+
+                if (fileExplorer.SelectedItems[0].Text == "")
+                {
+                    if(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent == null) ShowLogicalDrives();
+                    else ShowFiles(new DirectoryInfo(fileExplorer.SelectedItems[0].SubItems[4].Text).Parent.FullName);
+                }
+                else if (!(fileExplorer.View == View.LargeIcon) && File.GetAttributes(fileExplorer.SelectedItems[0].SubItems[4].Text).HasFlag(FileAttributes.Directory)) ShowFiles(fileExplorer.SelectedItems[0].SubItems[4].Text);
+                else if (fileExplorer.View == View.LargeIcon) ShowFiles(fileExplorer.SelectedItems[0].SubItems[0].Text);
+                else System.Diagnostics.Process.Start(fileExplorer.SelectedItems[0].SubItems[4].Text);
+            }catch(Exception ex)
+            {
+                MessageBox.Show("You don't have access to this!");
+                return;
             }
-            else if (!(fileExplorer.View == View.LargeIcon) && File.GetAttributes(fileExplorer.SelectedItems[0].SubItems[4].Text).HasFlag(FileAttributes.Directory)) ShowFiles(fileExplorer.SelectedItems[0].SubItems[4].Text);
-            else if (fileExplorer.View == View.LargeIcon) ShowFiles(fileExplorer.SelectedItems[0].SubItems[0].Text);
-            else System.Diagnostics.Process.Start(fileExplorer.SelectedItems[0].SubItems[4].Text);
         }
 
 
@@ -256,7 +271,9 @@ namespace CourseWork_2
         
         private void copyButton_Click(object sender, EventArgs e)
         {
-            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            if (fileExplorer.SelectedItems.Count == 0 
+                || fileExplorer.SelectedItems[0].Text == ""
+                || fileExplorer.SelectedItems[0].SubItems.Count < 3)
             {
                 MessageBox.Show("Select file\\directory");
                 return;
@@ -271,7 +288,9 @@ namespace CourseWork_2
 
         private void moveButton_Click(object sender, EventArgs e)
         {
-            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            if (fileExplorer.SelectedItems.Count == 0 
+                || fileExplorer.SelectedItems[0].Text == ""
+                || fileExplorer.SelectedItems[0].SubItems.Count < 3)
             {
                 MessageBox.Show("Select file\\directory");
                 return;
@@ -280,13 +299,15 @@ namespace CourseWork_2
             CopyMoveDeleteForm moveForm = new CopyMoveDeleteForm(this, fileExplorer.SelectedItems);
             MovePresenter movePresenter = new MovePresenter(moveForm);
             moveForm.Show();
-            this.Enabled = false;
             moveForm.Visible = false;
+            this.Enabled = false;
         }
 
         private void dleteButton_Click(object sender, EventArgs e)
         {
-            if (fileExplorer.SelectedItems.Count == 0 || fileExplorer.SelectedItems[0].Text == "")
+            if (fileExplorer.SelectedItems.Count == 0 
+                || fileExplorer.SelectedItems[0].Text == "" 
+                || fileExplorer.SelectedItems[0].SubItems.Count < 3)
             {
                 MessageBox.Show("Select file\\directory");
                 return;
@@ -298,6 +319,18 @@ namespace CourseWork_2
             deleteForm.Visible = false;
             this.Enabled = false;
 
+        }
+        private void createDirectoryButton_Click(object sender, EventArgs e)
+        {
+            if(fileExplorer.Items[0].SubItems.Count < 3)
+            {
+                MessageBox.Show("It is not possible to create a directory here");
+                return;
+            }
+            CreateRenameForm createForm = new CreateRenameForm(this, fileExplorer.Items[0]);
+            new CreateDirectoryPresenter(createForm);
+            createForm.Show();
+            this.Enabled = false;
         }
 
 
@@ -344,13 +377,6 @@ namespace CourseWork_2
             return fileExplorer;
         }
 
-        private void createDirectoryButton_Click(object sender, EventArgs e)
-        {
-            CreateRenameForm createForm = new CreateRenameForm(this, fileExplorer.Items[0]);
-            new CreateDirectoryPresenter(createForm);
-            createForm.Show();
-            this.Enabled = false;
-        }
     }
 
 

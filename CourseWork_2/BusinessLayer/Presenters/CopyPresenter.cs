@@ -1,4 +1,5 @@
 ﻿using CourseWork_2.PresentationLayer.View;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,7 +49,8 @@ namespace CourseWork_2.BusinessLayer.Presenters
 
                     }
                     showMessage += "\nin: " + path;
-
+                    
+                    Form.Visible = true;
                     DialogResult MessageResult = MessageBox.Show(
                         showMessage,
                         "Message",
@@ -67,15 +69,18 @@ namespace CourseWork_2.BusinessLayer.Presenters
 
 
                 //MessageBox.Show("ABA");
+
+
                 Form.ProgressBar.Maximum = Form.selectedItems.Count;
 
                 foreach (ListViewItem item in Form.selectedItems)
                 {
                     try
                     {
-                        Form.FileNameTextBoxText = item.SubItems[4].Text;
+                        Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[4].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
+                        /*Form.FileNameTextBoxText = item.SubItems[4].Text;
                         if (!Business.Copy(item.SubItems[4].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[4].Text);
-                        ++Form.ProgressBar.Value;
+                        ++Form.ProgressBar.Value;*/
                     }
                     catch (Exception ex)
                     {

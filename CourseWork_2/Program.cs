@@ -26,6 +26,7 @@ namespace CourseWork_2
             //dbManager.AddImageToDb("unknownFileImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-file-24.png"));
             //dbManager.AddImageToDb("driveImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Drive-Local-icon.png"));
             //dbManager.AddImageToDb("refreshButtonImage2", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-refresh-32 (1).png"));
+            //dbManager.AddImageToDb("newDriveImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\newImageForDrive.png"));
             
 
             Business business = new Business(dbManager);
