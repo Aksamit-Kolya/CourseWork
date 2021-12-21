@@ -26,13 +26,15 @@ namespace CourseWork_2.PresentationLayer
             ObjectCompare = new CaseInsensitiveComparer();
         }
 
-                public int Compare(object x, object y)
+        public int Compare(object x, object y)
         {
             int compareResult;
             ListViewItem listviewX, listviewY;
 
             listviewX = (ListViewItem)x;
             listviewY = (ListViewItem)y;
+
+            if (listviewX.SubItems.Count < 3) return 0;
 
             if (OrderOfSort == SortOrder.Ascending)
             {
@@ -137,7 +139,7 @@ namespace CourseWork_2.PresentationLayer
             }
             else if (listviewX.SubItems[0].Text.Contains("⭐") && listviewY.SubItems[0].Text.Contains("⭐"))
             {
-                return -listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
+                return listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
             }
             if (listviewX.SubItems[2].Text == "<Directory>" ^ listviewY.SubItems[2].Text == "<Directory>")
             {
@@ -185,7 +187,7 @@ namespace CourseWork_2.PresentationLayer
             }
             else if (listviewX.SubItems[0].Text.Contains("⭐") && listviewY.SubItems[0].Text.Contains("⭐"))
             {
-                return -listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
+                return listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
             }
             if (listviewX.SubItems[2].Text == "<Directory>" ^ listviewY.SubItems[2].Text == "<Directory>")
             {
@@ -244,7 +246,7 @@ namespace CourseWork_2.PresentationLayer
                 else return 1;
             }else if(listviewX.SubItems[0].Text.Contains("⭐") && listviewY.SubItems[0].Text.Contains("⭐"))
             {
-                return -listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
+                return listviewX.SubItems[0].Text.IndexOf("▶").CompareTo(listviewY.SubItems[0].Text.IndexOf("▶"));
             }
             if (listviewX.SubItems[2].Text == "<Directory>" ^ listviewY.SubItems[2].Text == "<Directory>")
             {

@@ -142,9 +142,20 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ServiceLayer\Images\RefreshButton2.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="ServiceLayer\Images\back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ServiceLayer\Images\RERFRESH.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ServiceLayer\Images\Без имени-1.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ServiceLayer\Images\2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

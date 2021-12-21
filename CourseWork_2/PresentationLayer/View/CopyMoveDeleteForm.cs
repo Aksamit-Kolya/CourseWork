@@ -18,6 +18,9 @@ namespace CourseWork_2.PresentationLayer.View
         private ListView.SelectedListViewItemCollection SelectedItems;
         public ListView.SelectedListViewItemCollection selectedItems { get => SelectedItems;}
 
+        public Label CountLabel { get => coutnLabel; }
+        public Label PercentLabel { get => percentLabel; }
+        public Label TextLabel { get => textLabel; }
         public ProgressBar ProgressBar { get => progressBar;}
         public string LabelText { get => Label.Text; set => Label.Text = value; }
         public string FileNameTextBoxText { get => fileNameTextBox.Text; set => fileNameTextBox.Text = value; }

@@ -17,9 +17,12 @@ namespace CourseWork_2.BusinessLayer.Presenters
             this.Form = Form;
 
             Form.LabelText = "Move";
+            Form.TextLabel.Text = "Number of moved files:";
+            Form.CountLabel.Text = "0/" + Form.selectedItems.Count;
             Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[5].Text;
             Form.Shown += MoveForm_Shown;
             Form.FormClosed += MoveForm_FormClosed;
+
         }
 
         private void MoveForm_Shown(object sender, EventArgs e)
@@ -74,8 +77,10 @@ namespace CourseWork_2.BusinessLayer.Presenters
                     try
                     {
                         Form.FileNameTextBoxText = item.SubItems[5].Text;
-                        ++Form.ProgressBar.Value;
                         Business.MoveWithProgressBar(item.SubItems[5].Text, path);
+                        ++Form.ProgressBar.Value;
+                        Form.PercentLabel.Text = ((int)(1.0 * Form.ProgressBar.Value / Form.ProgressBar.Maximum)).ToString() + "%";
+                        Form.CountLabel.Text = Form.ProgressBar.Value + "/" + Form.ProgressBar.Maximum;
                         //if (!Business.Move(item.SubItems[5].Text, path)) MessageBox.Show("Can't move file: " + item.SubItems[5].Text);
                     }
                     catch (Exception ex)

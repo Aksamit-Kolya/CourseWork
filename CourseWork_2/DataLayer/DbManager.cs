@@ -82,7 +82,46 @@ namespace CourseWork_2.DataLayer
                         image = ProgramIcons.GetIconByName("drictoryImage");
                         //image = Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия (1).jpg");
                         break;
-                    case ".exe":
+                        //Видео форматы
+                    case "webm":
+                    case "mpg":
+                    case "mp2":
+                    case "mpe":
+                    case "mpv":
+                    case "ogg":
+                    case "mp4":
+                    case "m4p":
+                    case "m4v":
+                    case "avi":
+                    case "wmv":
+                    case "mov":
+                    case "qt":
+                    case "flv":
+                    case "swf":
+                    case "avchd":
+                        image = ProgramIcons.GetIconByName("videoFileImage");
+                        break;
+                        //Музыка
+                    case "mp3":
+                    case "flac":
+                        image = ProgramIcons.GetIconByName("musicFileImage");
+                        break;
+                        //Фото
+                    case "png":
+                    case "jpg":
+                    case "tiff":
+                        image = ProgramIcons.GetIconByName("pictureFileImage2");
+                        break;
+                    //текстовые файлы
+                    case "txt":
+                    case "text":
+                    case "docx":
+                    case "doc":
+                    case "ppt":
+                    case "pptx":
+                        image = ProgramIcons.GetIconByName("textFileImage");
+                        break;
+                    case "exe":
                         image = ServiceLayer.Service.GetSmallFileIcon(fileExplorer.Items[imageCount].SubItems[5].Text).ToBitmap();
                         break;
                     default:

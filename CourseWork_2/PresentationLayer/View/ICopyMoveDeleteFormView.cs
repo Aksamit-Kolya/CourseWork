@@ -17,7 +17,12 @@ namespace CourseWork_2.PresentationLayer.View
 
         MainForm mainForm { get; }
         SelectedListViewItemCollection selectedItems { get; }
+
         ProgressBar ProgressBar { get; }
+        Label CountLabel { get; }
+        Label PercentLabel { get; }
+        Label TextLabel { get; }
+
         string LabelText { get; set; }
         string FileNameTextBoxText { get; set; }
         bool Visible { get; set; }

@@ -37,8 +37,8 @@ namespace CourseWork_2
             //Monitor.CreateWatcher(@"C:\");
 
 
-            refreshButton.ImageList = Business.GetImageForRefreshButton();
-            refreshButton.ImageIndex = 0;
+            //refreshButton.ImageList = Business.GetImageForRefreshButton(refreshButton.Size);
+            //refreshButton.ImageIndex = 0;
 
 
             Action action = () =>
@@ -56,8 +56,10 @@ namespace CourseWork_2
             
             searchRichTextBox.GotFocus += (o, e) =>
             {
+                if (searchRichTextBox.Text.Replace("🔎", "").Replace("Enter a search query", "").Trim() != "") return;
                 searchRichTextBox.Clear();
                 searchRichTextBox.AppendText("🔎 ", Color.Black);
+                searchRichTextBox.ForeColor = Color.Black;
                 
             };
             searchRichTextBox.LostFocus += (o, e) =>
@@ -70,6 +72,7 @@ namespace CourseWork_2
                 }
             };
         }
+
         public void ShowTreeViewFileExplorer()
         {
             List<string> expandedNodes = Service.collectExpandedNodes(treeViewFileExplorer.Nodes);
@@ -104,30 +107,43 @@ namespace CourseWork_2
         {
             try
             {
-                if (!searchRichTextBox.Focused)
-                {
-                    searchRichTextBox.Clear();
-                    searchRichTextBox.AppendText("🔎", Color.Black);
-                    searchRichTextBox.AppendText(" Enter a search query", Color.Gainsboro);
-                }
+
 
 
                 List<ListViewItem> items = Business.GetFileRecords(directoryPath);
                 fileExplorer.View = View.Details;
                 fileExplorer.Items.Clear();
                 fileExplorer.Items.AddRange(items.ToArray());
-                currentPathTextBox.Text = directoryPath + "\\*";
+                if(directoryPath.Length < 4) currentPathTextBox.Text = directoryPath + "*";
+                else currentPathTextBox.Text = directoryPath + "\\*";
                 ShowIcons();
             }
+/*            catch(FileNotFoundException e)
+            {
+                MessageBox.Show(e.Message);
+            }*/
             catch (Exception e)
             {
-                MessageBox.Show("You don't have access to this directory!");
+                MessageBox.Show(e.Message);
+                //MessageBox.Show("You don't have access to this directory!");
                 return;
+            }
+            if (!searchRichTextBox.Focused)
+            {
+                searchRichTextBox.Clear();
+                searchRichTextBox.AppendText("🔎", Color.Black);
+                searchRichTextBox.AppendText(" Enter a search query", Color.Gainsboro);
             }
         }
         public void ShowCurrentFiles()
         {
-            ShowFiles(fileExplorer.Items[0].SubItems[5].Text);
+            try
+            {
+                ShowFiles(fileExplorer.Items[0].SubItems[5].Text);
+            }catch(Exception e)
+            {
+
+            }
         }
 
         private void ShowLogicalDrives()
@@ -144,7 +160,7 @@ namespace CourseWork_2
             }
 
             currentPathTextBox.Clear();
-            currentPathTextBox.Text = "computer\\*";
+            currentPathTextBox.Text = "Computer\\*";
         }
 
         private void ShowIcons()
@@ -268,19 +284,21 @@ namespace CourseWork_2
             if (e.Button == MouseButtons.Right && fileExplorer.SelectedItems.Count != 0)
             {
                 if (fileExplorer.SelectedItems[0].SubItems.Count < 2 || fileExplorer.SelectedItems[0].SubItems[0].Text == "") return;
-                if(fileExplorer.SelectedItems.Count > 2)
+                if(fileExplorer.SelectedItems.Count > 1)
                 {
                     contextMenuStrip1.Items[0].Enabled = false;
-                    contextMenuStrip1.Items[1].Text = "Copy all";
-                    contextMenuStrip1.Items[2].Text = "Delete all";
+                    contextMenuStrip1.Items[1].Enabled = false;
+                    contextMenuStrip1.Items[2].Text = "Copy all";
                     contextMenuStrip1.Items[3].Text = "Move all";
+                    contextMenuStrip1.Items[4].Text = "Delete all";
                 }
                 else
                 {
                     contextMenuStrip1.Items[0].Enabled = true;
-                    contextMenuStrip1.Items[1].Text = "Copy";
-                    contextMenuStrip1.Items[2].Text = "Delete";
+                    contextMenuStrip1.Items[1].Enabled = true;
+                    contextMenuStrip1.Items[2].Text = "Copy";
                     contextMenuStrip1.Items[3].Text = "Move";
+                    contextMenuStrip1.Items[4].Text = "Delete";
                 }
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.Right);
             }
@@ -484,7 +502,7 @@ namespace CourseWork_2
 
         public  void refresh()
         {
-            if (currentPathTextBox.Text != "computer\\*")
+            if (currentPathTextBox.Text != "Computer\\*")
             {
                 ShowFiles(fileExplorer.Items[0].SubItems[5].Text);
             }
@@ -508,6 +526,7 @@ namespace CourseWork_2
         private void fileExplorer_ColumnClick(object sender, ColumnClickEventArgs e)
         {
             //LVColumnSorter.SortColumn = e.Column;
+            if (e.Column == 4) return;
             if (fileExplorer.Columns[e.Column].Text.Contains("🡅"))
             {
                 fileExplorer.Columns[e.Column].Text = fileExplorer.Columns[e.Column].Text.Replace("🡅", "🡇");
@@ -541,7 +560,13 @@ namespace CourseWork_2
         private void searchRichTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             String searchWord = searchRichTextBox.Text;
-            if (searchWord.IndexOf("🔎") == -1) searchWord.Trim();
+            //if (searchWord.IndexOf("🔎") == -1) searchWord.Trim();
+            if (searchWord.IndexOf("🔎 ") == -1) 
+            {
+                searchRichTextBox.Text = "🔎 ";
+                searchRichTextBox.Select(3, 0);
+                return;
+            }
             if (searchWord.IndexOf("🔎") == 0) searchWord = searchWord.Substring(2).Trim();
 
             if (string.IsNullOrWhiteSpace(searchWord))
@@ -552,48 +577,27 @@ namespace CourseWork_2
             foreach(ListViewItem item in fileExplorer.Items)
             {
                 item.SubItems[0].Text = item.SubItems[0].Text.Replace("▶", "").Replace("◀", "").Replace("⭐", "");
-                if (!item.SubItems[0].Text.Contains(searchWord)) continue;
-                item.SubItems[0].Text = "⭐" + item.SubItems[0].Text.Substring(0, item.SubItems[0].Text.IndexOf(searchWord))
-                            + "▶" + searchWord + "◀"
-                            + item.SubItems[0].Text.Substring(item.SubItems[0].Text.IndexOf(searchWord) + searchWord.Length);
+                if (item.SubItems[0].Text.IndexOf(searchWord, StringComparison.OrdinalIgnoreCase) < 0) continue;
+                item.SubItems[0].Text = "⭐" + item.SubItems[0].Text.Substring(0, item.SubItems[0].Text.IndexOf(searchWord, StringComparison.OrdinalIgnoreCase))
+                            + "▶" + item.SubItems[0].Text.Substring(item.SubItems[0].Text.IndexOf(searchWord, StringComparison.OrdinalIgnoreCase), searchWord.Length) + "◀"
+                            + item.SubItems[0].Text.Substring(item.SubItems[0].Text.IndexOf(searchWord, StringComparison.OrdinalIgnoreCase) + searchWord.Length);
             }
             fileExplorer.Sort();
-/*            
- *            
-            else
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            fileExplorer_DoubleClick(sender, e);
+        }
+
+        private void searchRichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (searchRichTextBox.Text.IndexOf("🔎 ") == -1)
             {
-                //ShowProducts(Business.GetAllSuitableProducts(searchWord));
-                this.listView1.Items.Clear();
-
-                listView1.Columns.Clear();
-                listView1.Columns.Add("Name", 300, HorizontalAlignment.Left);
-                listView1.Columns.Add("Gramms", 50, HorizontalAlignment.Left);
-                listView1.Columns.Add("Protein", 50, HorizontalAlignment.Left);
-                listView1.Columns.Add("Fats", 50, HorizontalAlignment.Left);
-                listView1.Columns.Add("Cards", 50, HorizontalAlignment.Left);
-                listView1.Columns.Add("Calories", 50, HorizontalAlignment.Left);
-
-                foreach (Product product in Business.GetAllSuitableProducts(searchWord))
-                {
-                    string name = product.GetName().Substring(0, product.GetName().IndexOf(searchWord))
-                        + "▶" + searchWord + "◀"
-                        + product.GetName().Substring(product.GetName().IndexOf(searchWord) + searchWord.Length);
-
-                    ListViewItem productInformation = new ListViewItem(name);
-
-                    productInformation.SubItems.Add(Convert.ToString(product.GetGramms()));
-                    productInformation.SubItems.Add(Convert.ToString(product.GetProtein()));
-                    productInformation.SubItems.Add(Convert.ToString(product.GetFats()));
-                    productInformation.SubItems.Add(Convert.ToString(product.GetCarbs()));
-                    productInformation.SubItems.Add(Convert.ToString(product.GetCalories()));
-
-                    listView1.Items.Add(productInformation);
-                }
-                AddButton.Enabled = false;
-                AddButton.Text = "Add product";
-                Condition = ListViewCondition.DisplayProducts;
-
-            }*/
+                searchRichTextBox.Text = "🔎 ";
+                searchRichTextBox.Select(3, 0);
+                return;
+            }
         }
     }
 

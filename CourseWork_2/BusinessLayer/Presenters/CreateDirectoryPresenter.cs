@@ -34,7 +34,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
         private void okButton_Click(object sender, EventArgs e)
         {
             //if (Form.TextBox.Text == Form.selectedFileInfo.Name) Form.Close();
-            if (string.IsNullOrEmpty(Form.TextBox.Text))
+            if (string.IsNullOrEmpty(Form.TextBox.Text.Replace("\\", "").Replace("/", "").Trim()))
             {
                 Form.ErrorLabel.Text = "*The name musb be not null!";
                 Form.isErrorLabelVisible = true;
@@ -72,8 +72,16 @@ namespace CourseWork_2.BusinessLayer.Presenters
                 Form.isOkButtonEnabled = false;
                 return;
             }
-
-            Business.CreateDirectory(fileName);
+            try
+            {
+                Business.CreateDirectory(fileName);
+            }catch(Exception ex)
+            {
+                Form.ErrorLabel.Text = "*" + ex.Message;
+                Form.ErrorLabel.Visible = true;
+                Form.isOkButtonEnabled = false;
+                return;
+            }
             //Form.selectedFileInfo.Rename(Form.TextBox.Text);
             Form.Close();
         }

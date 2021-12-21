@@ -108,7 +108,7 @@ namespace CourseWork_2.BusinessLayer
             foreach (FileInfo fileInfo in GetFilesInfo(directoryPath))
             {
                 ListViewItem item = new ListViewItem(" " + fileInfo.Name);
-                item.SubItems.Add(fileInfo.Extension);
+                item.SubItems.Add(fileInfo.Extension.Substring(1));
                 item.SubItems.Add(fileInfo.Length.ToString("N", CultureInfo.CreateSpecificCulture("fr-FR"))
                     .Substring(0, fileInfo.Length.ToString("N", CultureInfo.CreateSpecificCulture("fr-FR")).Length - 3));
                 item.SubItems.Add(fileInfo.CreationTime.ToString("MM-dd-yyyy HH:mm"));
@@ -119,7 +119,7 @@ namespace CourseWork_2.BusinessLayer
 
             return items;
         }
-        public List<string> GetDirectories(string directoryPath)
+        public static List<string> GetDirectories(string directoryPath)
         {
             var it = Directory.EnumerateDirectories(directoryPath).GetEnumerator();
             List<string> directoryNames = new List<string>();
@@ -187,12 +187,12 @@ namespace CourseWork_2.BusinessLayer
             imageList.ImageSize = new Size(60, 60);
             return imageList;
         }
-        public ImageList GetImageForRefreshButton()
+        public ImageList GetImageForRefreshButton(Size buttonSize)
         {
             ImageList imageList = new ImageList();
-            imageList.Images.Add(dbManager.GetImage("refreshButtonImage2"));
+            imageList.Images.Add(dbManager.GetImage("drictoryImage2"));
             //imageList.Images.Add(Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Без названия.png"));
-            imageList.ImageSize = new Size(15, 15);
+            imageList.ImageSize = buttonSize;
             return imageList;
 
         }
@@ -395,11 +395,24 @@ namespace CourseWork_2.BusinessLayer
                 
             if (ServiceLayer.Service.isDirectory(oldPath))
             {
-                FileSystem.CopyDirectory(oldPath, newPath + "\\" + new DirectoryInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+                string NewName = new DirectoryInfo(oldPath).Name;
+                while (true)
+                {
+                    List<string> Dirs = GetDirectories(newPath);
+                    if (Dirs.Contains((newPath + "\\" + NewName).Replace("\\\\", "\\")))
+                    {
+                        NewName = "copy-" + NewName;
+                    }
+                    else break;
+                }
+
+                FileSystem.CreateDirectory(newPath + "\\" + NewName);
+                //Directory.CreateDirectory(newPath + "\\" + new DirectoryInfo(oldPath).Name);
+                FileSystem.CopyDirectory(oldPath, newPath + "\\" + NewName, UIOption.AllDialogs, UICancelOption.DoNothing);
             }
             else
             {
-                FileSystem.CopyFile(oldPath, newPath + "\\" + new FileInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
+                FileSystem.CopyFile(oldPath, newPath.Trim("\\".ToCharArray()) + "\\" + new FileInfo(oldPath).Name, UIOption.AllDialogs, UICancelOption.DoNothing);
                 
             }
         }

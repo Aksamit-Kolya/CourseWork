@@ -27,10 +27,35 @@ namespace CourseWork_2
             //dbManager.AddImageToDb("driveImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Drive-Local-icon.png"));
             //dbManager.AddImageToDb("refreshButtonImage2", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\icons8-refresh-32 (1).png"));
             //dbManager.AddImageToDb("newDriveImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\newImageForDrive.png"));
+            //dbManager.AddImageToDb("drictoryImage2", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\RefreshButton2.png"));
+
+
+            /*dbManager.AddImageToDb("videoFileImage", 
+                Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\movie-symbol-of-video-camera_icon-icons.com_72981.png"));
+            dbManager.AddImageToDb("photoFileImage",
+               Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\photo-camera-1_icon-icons.com_63898.png"));
             
+            dbManager.AddImageToDb("musicFileImage",
+                Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\3293588.png"));
+            dbManager.AddImageToDb("textFileImage",
+                Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\DocumentEdit_40924.png"));
+            dbManager.AddImageToDb("pictureFileImage2",
+               Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\picture_image_icon-icons.com_72393.png"));
+            return;
+            */
+
 
             Business business = new Business(dbManager);
-            Application.Run(new MainForm(business));
+
+        Foo:
+            try
+            {
+                Application.Run(new MainForm(business));
+            }
+            catch (Exception e)
+            {
+                goto Foo;
+            }
         }
     }
 }

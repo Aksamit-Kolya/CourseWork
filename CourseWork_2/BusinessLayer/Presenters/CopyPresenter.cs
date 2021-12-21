@@ -18,6 +18,8 @@ namespace CourseWork_2.BusinessLayer.Presenters
             this.Form = Form;
 
             Form.LabelText = "Copy";
+            Form.TextLabel.Text = "Number of copied files:";
+            Form.CountLabel.Text = "0/" + Form.selectedItems.Count;
             Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[5].Text;
             Form.Shown += CopyForm_Shown;
             Form.FormClosed += CopyForm_FormClosed;
@@ -78,8 +80,10 @@ namespace CourseWork_2.BusinessLayer.Presenters
                     try
                     {
                         Form.FileNameTextBoxText = item.SubItems[5].Text;
-                        ++Form.ProgressBar.Value;
                         Business.CopyWithProgressBar(item.SubItems[5].Text, path);
+                        ++Form.ProgressBar.Value;
+                        Form.PercentLabel.Text = ((int)(1.0 * Form.ProgressBar.Value / Form.ProgressBar.Maximum)).ToString() + "%";
+                        Form.CountLabel.Text = Form.ProgressBar.Value + "/" + Form.ProgressBar.Maximum;
                         //Microsoft.VisualBasic.FileIO.FileSystem.CopyDirectory(item.SubItems[5].Text, path, UIOption.AllDialogs, UICancelOption.DoNothing);
                         //if (!Business.Copy(item.SubItems[5].Text, path)) MessageBox.Show("Can't copy file: " + item.SubItems[5].Text);
                     }

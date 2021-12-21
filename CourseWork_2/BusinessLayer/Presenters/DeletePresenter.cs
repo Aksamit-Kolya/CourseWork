@@ -17,9 +17,12 @@ namespace CourseWork_2.BusinessLayer.Presenters
             this.Form = Form;
 
             Form.LabelText = "Delete";
+            Form.TextLabel.Text = "Number of deleted files:";
+            Form.CountLabel.Text = "0/" + Form.selectedItems.Count;
             Form.FileNameTextBoxText = Form.selectedItems[0].SubItems[5].Text;
             Form.Shown += DeleteForm_Shown;
             Form.FormClosed += DeleteForm_FormClosed;
+
         }
 
         private void DeleteForm_Shown(object sender, EventArgs e)
@@ -58,10 +61,12 @@ namespace CourseWork_2.BusinessLayer.Presenters
                     try
                     {
                         Form.FileNameTextBoxText = item.SubItems[5].Text;
+                        Business.DeleteWithProgressBar(item.SubItems[5].Text);
                         ++Form.ProgressBar.Value;
-                        Business.DeleteWithProgressBar(item.SubItems[5].Text);    
+                        Form.PercentLabel.Text = ((int)(1.0 * Form.ProgressBar.Value / Form.ProgressBar.Maximum)).ToString() + "%";
+                        Form.CountLabel.Text = Form.ProgressBar.Value + "/" + Form.ProgressBar.Maximum;
                     //if (!Business.Delete(item.SubItems[5].Text)) MessageBox.Show("Can't delete file: " + item.SubItems[5].Text);
-                    }
+                }
                     catch (Exception ex)
                     {
                         MessageBox.Show(ex.Message);
