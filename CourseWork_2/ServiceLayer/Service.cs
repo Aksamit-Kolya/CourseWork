@@ -124,6 +124,8 @@ namespace CourseWork_2.ServiceLayer
             return isValidUri && pathUri != null && pathUri.IsLoopback;
         }
 
+
+
         [StructLayout(LayoutKind.Sequential)]
         public struct SHFILEINFO
         {
@@ -208,16 +210,19 @@ namespace CourseWork_2.ServiceLayer
             // Do something while waiting for events
             //System.Threading.Thread.Sleep(20000000);
         }
+
     }
 }
-    namespace System.IO
+public static class RichTextBoxExtensions
+{
+    public static void AppendText(this RichTextBox box, string text, Color color)
     {
-        public static class FileInfoExtensions
-        {
-            public static void Rename(this FileInfo fileInfo, string newName)
-            {
-                fileInfo.MoveTo(Path.Combine(fileInfo.Directory.FullName, newName));
-            }
-        }
+        box.SelectionStart = box.TextLength;
+        box.SelectionLength = 0;
+
+        box.SelectionColor = color;
+        box.AppendText(text);
+        box.SelectionColor = box.ForeColor;
     }
+}
 

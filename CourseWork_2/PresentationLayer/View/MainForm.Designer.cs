@@ -30,21 +30,22 @@ namespace CourseWork_2
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("testFile");
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode1});
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
-            treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("abacaba");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("aba");
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("testFile");
+            System.Windows.Forms.TreeNode treeNode19 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode20 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode19});
+            System.Windows.Forms.TreeNode treeNode21 = new System.Windows.Forms.TreeNode("test", new System.Windows.Forms.TreeNode[] {
+            treeNode20});
+            System.Windows.Forms.TreeNode treeNode22 = new System.Windows.Forms.TreeNode("abacaba");
+            System.Windows.Forms.TreeNode treeNode23 = new System.Windows.Forms.TreeNode("aba", new System.Windows.Forms.TreeNode[] {
+            treeNode22});
+            System.Windows.Forms.TreeNode treeNode24 = new System.Windows.Forms.TreeNode("aba");
             this.fileExplorer = new System.Windows.Forms.ListView();
             this.nameColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.existsColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lengthColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.athrebutColomn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,7 @@ namespace CourseWork_2
             this.refreshButton = new System.Windows.Forms.Button();
             this.renameButton = new System.Windows.Forms.Button();
             this.createDirectoryButton = new System.Windows.Forms.Button();
-            this.athrebutColomn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.searchRichTextBox = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,39 +77,47 @@ namespace CourseWork_2
             this.fileExplorer.GridLines = true;
             this.fileExplorer.HideSelection = false;
             this.fileExplorer.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem4});
             this.fileExplorer.Location = new System.Drawing.Point(310, 64);
             this.fileExplorer.Name = "fileExplorer";
             this.fileExplorer.Size = new System.Drawing.Size(856, 574);
             this.fileExplorer.TabIndex = 0;
             this.fileExplorer.UseCompatibleStateImageBehavior = false;
             this.fileExplorer.View = System.Windows.Forms.View.Details;
+            this.fileExplorer.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.fileExplorer_ColumnClick);
             this.fileExplorer.DoubleClick += new System.EventHandler(this.fileExplorer_DoubleClick);
             this.fileExplorer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.fileExplorer_MouseClick);
             // 
             // nameColumn
             // 
             this.nameColumn.Tag = "";
-            this.nameColumn.Text = "Name";
+            this.nameColumn.Text = "🡅Name";
             this.nameColumn.Width = 448;
             // 
             // existsColumn
             // 
             this.existsColumn.Tag = "";
-            this.existsColumn.Text = "Exists";
-            this.existsColumn.Width = 64;
+            this.existsColumn.Text = "FEX";
+            this.existsColumn.Width = 53;
             // 
             // lengthColumn
             // 
             this.lengthColumn.Tag = "lengthColumn";
             this.lengthColumn.Text = "Length";
-            this.lengthColumn.Width = 86;
+            this.lengthColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.lengthColumn.Width = 101;
             // 
             // dateColumn
             // 
             this.dateColumn.Tag = "dateColumn";
             this.dateColumn.Text = "Date";
-            this.dateColumn.Width = 160;
+            this.dateColumn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.dateColumn.Width = 145;
+            // 
+            // athrebutColomn
+            // 
+            this.athrebutColomn.Text = "Athrebut";
+            this.athrebutColomn.Width = 92;
             // 
             // contextMenuStrip1
             // 
@@ -154,22 +163,22 @@ namespace CourseWork_2
             this.treeViewFileExplorer.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.treeViewFileExplorer.Location = new System.Drawing.Point(29, 64);
             this.treeViewFileExplorer.Name = "treeViewFileExplorer";
-            treeNode1.Name = "Node6";
-            treeNode1.Text = "abacaba";
-            treeNode2.Name = "Node4";
-            treeNode2.Text = "aba";
-            treeNode3.Name = "Node1";
-            treeNode3.Text = "test";
-            treeNode4.Name = "Node5";
-            treeNode4.Text = "abacaba";
-            treeNode5.Name = "Node2";
-            treeNode5.Text = "aba";
-            treeNode6.Name = "Node3";
-            treeNode6.Text = "aba";
+            treeNode19.Name = "Node6";
+            treeNode19.Text = "abacaba";
+            treeNode20.Name = "Node4";
+            treeNode20.Text = "aba";
+            treeNode21.Name = "Node1";
+            treeNode21.Text = "test";
+            treeNode22.Name = "Node5";
+            treeNode22.Text = "abacaba";
+            treeNode23.Name = "Node2";
+            treeNode23.Text = "aba";
+            treeNode24.Name = "Node3";
+            treeNode24.Text = "aba";
             this.treeViewFileExplorer.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode5,
-            treeNode6});
+            treeNode21,
+            treeNode23,
+            treeNode24});
             this.treeViewFileExplorer.Size = new System.Drawing.Size(249, 369);
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
@@ -193,7 +202,7 @@ namespace CourseWork_2
             // 
             this.currentPathTextBox.Location = new System.Drawing.Point(341, 36);
             this.currentPathTextBox.Name = "currentPathTextBox";
-            this.currentPathTextBox.Size = new System.Drawing.Size(825, 22);
+            this.currentPathTextBox.Size = new System.Drawing.Size(571, 22);
             this.currentPathTextBox.TabIndex = 4;
             // 
             // moveButton
@@ -246,16 +255,25 @@ namespace CourseWork_2
             this.createDirectoryButton.UseVisualStyleBackColor = true;
             this.createDirectoryButton.Click += new System.EventHandler(this.createDirectoryButton_Click);
             // 
-            // athrebutColomn
+            // searchRichTextBox
             // 
-            this.athrebutColomn.Text = "Athrebut";
-            this.athrebutColomn.Width = 92;
+            this.searchRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.searchRichTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.searchRichTextBox.ForeColor = System.Drawing.SystemColors.ScrollBar;
+            this.searchRichTextBox.Location = new System.Drawing.Point(918, 36);
+            this.searchRichTextBox.Name = "searchRichTextBox";
+            this.searchRichTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.searchRichTextBox.Size = new System.Drawing.Size(248, 22);
+            this.searchRichTextBox.TabIndex = 12;
+            this.searchRichTextBox.Text = "";
+            this.searchRichTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.searchRichTextBox_KeyUp);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1178, 679);
+            this.Controls.Add(this.searchRichTextBox);
             this.Controls.Add(this.createDirectoryButton);
             this.Controls.Add(this.renameButton);
             this.Controls.Add(this.refreshButton);
@@ -295,6 +313,7 @@ namespace CourseWork_2
         private System.Windows.Forms.Button renameButton;
         private System.Windows.Forms.Button createDirectoryButton;
         private System.Windows.Forms.ColumnHeader athrebutColomn;
+        private System.Windows.Forms.RichTextBox searchRichTextBox;
     }
 }
 

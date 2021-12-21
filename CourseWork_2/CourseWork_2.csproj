@@ -57,6 +57,7 @@
     <Compile Include="DataLayer\DbManager.cs" />
     <Compile Include="DataLayer\IDbManager.cs" />
     <Compile Include="DataLayer\Models\ProgramIcons.cs" />
+    <Compile Include="PresentationLayer\ListViewColumnSorter.cs" />
     <Compile Include="PresentationLayer\View\ICreateRenameFormView.cs" />
     <Compile Include="PresentationLayer\View\CreateRenameForm.cs">
       <SubType>Form</SubType>
@@ -64,6 +65,8 @@
     <Compile Include="PresentationLayer\View\CreateRenameForm.Designer.cs">
       <DependentUpon>CreateRenameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServiceLayer\FileInfoExtensions.cs" />
+    <Compile Include="ServiceLayer\RichTextBoxExtensions.cs" />
     <Compile Include="_Draft\CopyForm.cs">
       <SubType>Form</SubType>
     </Compile>

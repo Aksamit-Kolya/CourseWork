@@ -23,6 +23,7 @@ namespace CourseWork_2
         Business Business;
         Monitor Monitor = new Monitor();
         InsertRemovedDeviceMonitor DeviceMonitor;
+        ListViewColumnSorter LVColumnSorter;
         public MainForm(Business business)
         {
 
@@ -45,7 +46,29 @@ namespace CourseWork_2
                 refresh();
             };
             DeviceMonitor = new InsertRemovedDeviceMonitor((o, e) => Invoke(action), (o, e) => Invoke(action));
+
+            LVColumnSorter = new ListViewColumnSorter();
+            fileExplorer.ListViewItemSorter = LVColumnSorter;
+            LVColumnSorter.Order = SortOrder.Ascending;
+
+            searchRichTextBox.AppendText("🔎", Color.Black);
+            searchRichTextBox.AppendText(" Enter a search query", Color.Gainsboro);
             
+            searchRichTextBox.GotFocus += (o, e) =>
+            {
+                searchRichTextBox.Clear();
+                searchRichTextBox.AppendText("🔎 ", Color.Black);
+                
+            };
+            searchRichTextBox.LostFocus += (o, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(searchRichTextBox.Text) || searchRichTextBox.Text == "🔎 ")
+                {
+                    searchRichTextBox.Clear();
+                    searchRichTextBox.AppendText("🔎", Color.Black);
+                    searchRichTextBox.AppendText(" Enter a search query", Color.Gainsboro);
+                }
+            };
         }
         public void ShowTreeViewFileExplorer()
         {
@@ -81,6 +104,12 @@ namespace CourseWork_2
         {
             try
             {
+                if (!searchRichTextBox.Focused)
+                {
+                    searchRichTextBox.Clear();
+                    searchRichTextBox.AppendText("🔎", Color.Black);
+                    searchRichTextBox.AppendText(" Enter a search query", Color.Gainsboro);
+                }
 
 
                 List<ListViewItem> items = Business.GetFileRecords(directoryPath);
@@ -95,6 +124,10 @@ namespace CourseWork_2
                 MessageBox.Show("You don't have access to this directory!");
                 return;
             }
+        }
+        public void ShowCurrentFiles()
+        {
+            ShowFiles(fileExplorer.Items[0].SubItems[5].Text);
         }
 
         private void ShowLogicalDrives()
@@ -472,6 +505,96 @@ namespace CourseWork_2
             return fileExplorer;
         }
 
+        private void fileExplorer_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            //LVColumnSorter.SortColumn = e.Column;
+            if (fileExplorer.Columns[e.Column].Text.Contains("🡅"))
+            {
+                fileExplorer.Columns[e.Column].Text = fileExplorer.Columns[e.Column].Text.Replace("🡅", "🡇");
+                LVColumnSorter.Order = SortOrder.Descending;
+                //fileExplorer.Sorting = SortOrder.Descending;
+                
+                fileExplorer.Sort();
+                return;
+            }
+            else if (fileExplorer.Columns[e.Column].Text.Contains("🡇"))
+            {
+                fileExplorer.Columns[e.Column].Text = fileExplorer.Columns[e.Column].Text.Replace("🡇", "🡅");
+                LVColumnSorter.Order = SortOrder.Ascending;
+                //fileExplorer.Sorting = SortOrder.Ascending;
+                fileExplorer.Sort();
+                return;
+            }
+            else
+            {
+                fileExplorer.Columns[LVColumnSorter.SortColumn].Text = 
+                    fileExplorer.Columns[LVColumnSorter.SortColumn].Text.Replace("🡅", "").Replace("🡇", "");
+
+                fileExplorer.Columns[e.Column].Text = "🡅" + fileExplorer.Columns[e.Column].Text;
+                LVColumnSorter.SortColumn = e.Column;
+                LVColumnSorter.Order = SortOrder.Ascending;
+                fileExplorer.Sort();
+                return;
+            }
+        }
+
+        private void searchRichTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            String searchWord = searchRichTextBox.Text;
+            if (searchWord.IndexOf("🔎") == -1) searchWord.Trim();
+            if (searchWord.IndexOf("🔎") == 0) searchWord = searchWord.Substring(2).Trim();
+
+            if (string.IsNullOrWhiteSpace(searchWord))
+            {
+                ShowCurrentFiles();
+                return;
+            }
+            foreach(ListViewItem item in fileExplorer.Items)
+            {
+                item.SubItems[0].Text = item.SubItems[0].Text.Replace("▶", "").Replace("◀", "").Replace("⭐", "");
+                if (!item.SubItems[0].Text.Contains(searchWord)) continue;
+                item.SubItems[0].Text = "⭐" + item.SubItems[0].Text.Substring(0, item.SubItems[0].Text.IndexOf(searchWord))
+                            + "▶" + searchWord + "◀"
+                            + item.SubItems[0].Text.Substring(item.SubItems[0].Text.IndexOf(searchWord) + searchWord.Length);
+            }
+            fileExplorer.Sort();
+/*            
+ *            
+            else
+            {
+                //ShowProducts(Business.GetAllSuitableProducts(searchWord));
+                this.listView1.Items.Clear();
+
+                listView1.Columns.Clear();
+                listView1.Columns.Add("Name", 300, HorizontalAlignment.Left);
+                listView1.Columns.Add("Gramms", 50, HorizontalAlignment.Left);
+                listView1.Columns.Add("Protein", 50, HorizontalAlignment.Left);
+                listView1.Columns.Add("Fats", 50, HorizontalAlignment.Left);
+                listView1.Columns.Add("Cards", 50, HorizontalAlignment.Left);
+                listView1.Columns.Add("Calories", 50, HorizontalAlignment.Left);
+
+                foreach (Product product in Business.GetAllSuitableProducts(searchWord))
+                {
+                    string name = product.GetName().Substring(0, product.GetName().IndexOf(searchWord))
+                        + "▶" + searchWord + "◀"
+                        + product.GetName().Substring(product.GetName().IndexOf(searchWord) + searchWord.Length);
+
+                    ListViewItem productInformation = new ListViewItem(name);
+
+                    productInformation.SubItems.Add(Convert.ToString(product.GetGramms()));
+                    productInformation.SubItems.Add(Convert.ToString(product.GetProtein()));
+                    productInformation.SubItems.Add(Convert.ToString(product.GetFats()));
+                    productInformation.SubItems.Add(Convert.ToString(product.GetCarbs()));
+                    productInformation.SubItems.Add(Convert.ToString(product.GetCalories()));
+
+                    listView1.Items.Add(productInformation);
+                }
+                AddButton.Enabled = false;
+                AddButton.Text = "Add product";
+                Condition = ListViewCondition.DisplayProducts;
+
+            }*/
+        }
     }
 
 

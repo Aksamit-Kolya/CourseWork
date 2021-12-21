@@ -1,4 +1,5 @@
 ﻿using CourseWork_2.PresentationLayer.View;
+using CourseWork_2.ServiceLayer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -93,7 +94,7 @@ namespace CourseWork_2.BusinessLayer.Presenters
             int i = Form.TextBox.Text.Length - 1;
             for (; Form.TextBox.Text[i] != '.' && i > 0; --i) ;
             if (i == 0) Form.TextBox.SelectAll();
-            else Form.TextBox.Select(0, i - 1);
+            else Form.TextBox.Select(0, i);
         }
     }
 }

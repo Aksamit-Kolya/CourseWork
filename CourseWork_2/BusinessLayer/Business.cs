@@ -3,6 +3,7 @@ using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -88,7 +89,7 @@ namespace CourseWork_2.BusinessLayer
                 ListViewItem item = new ListViewItem("");
                 item.SubItems.Add("");
                 item.SubItems.Add("<Directory>");
-                item.SubItems.Add(dirInfo.CreationTime.ToString());
+                item.SubItems.Add(dirInfo.CreationTime.ToString("MM-dd-yyyy HH:mm"));
                 item.SubItems.Add(dirInfo.Attributes.ToString());
                 item.SubItems.Add(dirInfo.FullName);
                 items.Add(item);
@@ -98,7 +99,7 @@ namespace CourseWork_2.BusinessLayer
                 ListViewItem item = new ListViewItem(" " + dirInfo.Name);
                 item.SubItems.Add("");
                 item.SubItems.Add("<Directory>");
-                item.SubItems.Add(dirInfo.CreationTime.ToString());
+                item.SubItems.Add(dirInfo.CreationTime.ToString("MM-dd-yyyy HH:mm"));
                 item.SubItems.Add(dirInfo.Attributes.ToString());
                 item.SubItems.Add(dirInfo.FullName);
                 items.Add(item);
@@ -108,8 +109,9 @@ namespace CourseWork_2.BusinessLayer
             {
                 ListViewItem item = new ListViewItem(" " + fileInfo.Name);
                 item.SubItems.Add(fileInfo.Extension);
-                item.SubItems.Add(fileInfo.Length.ToString());
-                item.SubItems.Add(fileInfo.CreationTime.ToString());
+                item.SubItems.Add(fileInfo.Length.ToString("N", CultureInfo.CreateSpecificCulture("fr-FR"))
+                    .Substring(0, fileInfo.Length.ToString("N", CultureInfo.CreateSpecificCulture("fr-FR")).Length - 3));
+                item.SubItems.Add(fileInfo.CreationTime.ToString("MM-dd-yyyy HH:mm"));
                 item.SubItems.Add(fileInfo.Attributes.ToString());
                 item.SubItems.Add(fileInfo.FullName);
                 items.Add(item);
