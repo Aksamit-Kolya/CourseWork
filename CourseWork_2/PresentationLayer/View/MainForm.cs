@@ -367,7 +367,14 @@ namespace CourseWork_2
             {
                 string path = GetPathFromFileDialog();
 
-                if (path != null) Business.CopyWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
+                try
+                {
+                    if (path != null) Business.CopyWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                refresh();
             }
         }
         private void moveButton_Click(object sender, EventArgs e)
@@ -392,8 +399,13 @@ namespace CourseWork_2
             else
             {
                 string path = GetPathFromFileDialog();
-
-                if(path != null) Business.MoveWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
+                try
+                {
+                    if(path != null) Business.MoveWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text, path);
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
                 refresh();
             }
 
@@ -433,6 +445,7 @@ namespace CourseWork_2
                 deleteForm.Show();
                 deleteForm.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2,
                           (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2);
+
                 //moveForm.Visible = false;
                 this.Enabled = false;
             }
@@ -449,7 +462,14 @@ namespace CourseWork_2
 
                 if (result != DialogResult.Yes) return;
 
-                Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text);
+                try
+                {
+                    Business.DeleteWithProgressBar(fileExplorer.SelectedItems[0].SubItems[5].Text);
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                
                 refresh();
             }
         }
@@ -640,7 +660,13 @@ namespace CourseWork_2
                 string selectedDirectoryPath;
                 if (treeViewFileExplorer.SelectedNode.Parent.Parent == null) selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\";
                 else selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode);
-                Business.CopyWithProgressBar(path, selectedDirectoryPath);
+                try
+                {
+                    Business.CopyWithProgressBar(path, selectedDirectoryPath);
+                }catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
             refresh();
         }
