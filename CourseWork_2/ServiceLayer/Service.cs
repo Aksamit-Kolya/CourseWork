@@ -56,7 +56,7 @@ namespace CourseWork_2.ServiceLayer
 
         public static string GetFullPathForNode(TreeNode node)
         {
-            return node.FullPath[12] + ":" + node.FullPath.Substring(15);
+            return node.FullPath[21] + ":" + node.FullPath.Substring(24);
         }
 
         public static List<string> collectExpandedNodes(TreeNodeCollection Nodes)

@@ -196,6 +196,10 @@ namespace CourseWork_2.BusinessLayer
             return imageList;
 
         }
+        public Image GetImageForComputer()
+        {
+            return dbManager.GetImage("computerImage");
+        }
         public Image GetImageForDirectory()
         {
             return dbManager.GetImage("drictoryImage");

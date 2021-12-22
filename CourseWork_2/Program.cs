@@ -41,8 +41,10 @@ namespace CourseWork_2
                 Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\DocumentEdit_40924.png"));
             dbManager.AddImageToDb("pictureFileImage2",
                Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\picture_image_icon-icons.com_72393.png"));
-            return;
             */
+            //dbManager.AddImageToDb("computerImage", Image.FromFile(@"C:\Users\Nikolai\source\repos\CourseWork_2\CourseWork_2\ServiceLayer\Images\Computer.jfif"));
+            //return;
+            
 
 
             Business business = new Business(dbManager);

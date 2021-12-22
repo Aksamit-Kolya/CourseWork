@@ -24,8 +24,10 @@ namespace CourseWork_2
         Monitor Monitor = new Monitor();
         InsertRemovedDeviceMonitor DeviceMonitor;
         ListViewColumnSorter LVColumnSorter;
+        List<string> Buffer;
         public MainForm(Business business)
         {
+            Buffer = new List<string>();
 
             Business = business;
             InitializeComponent();
@@ -82,19 +84,26 @@ namespace CourseWork_2
             ImageList images = new ImageList();
             images.Images.Add(Business.GetTreeViewImageForDrivers().Images[0]);
             images.Images.Add(Business.GetImageForDirectory());
+            images.Images.Add(Business.GetImageForComputer());
             treeViewFileExplorer.ImageList = images;
 
+            TreeNode node = new TreeNode("Computer");
+            node.ImageIndex = 2;
+            node.SelectedImageIndex = 2;
+            //node.Name
+            treeViewFileExplorer.Nodes.Add(node);
             foreach (string drives in Directory.GetLogicalDrives())
             {
-                TreeNode node = new TreeNode("Local disk (" + drives.Substring(0, drives.Length - 1) + ")");
-                node.ImageIndex = 0;
+                TreeNode secondNode = new TreeNode("Local disk (" + drives.Substring(0, drives.Length - 1) + ")");
+                secondNode.Name = "Local disk (" + drives.Substring(0, drives.Length - 1) + ")";
+                node.Nodes.Add(secondNode);
+                secondNode.ImageIndex = 0;
 
                 foreach (DirectoryInfo dirInfo in Business.GetDirectoriesInfo(drives))
                 {
-                    node.Nodes.Add(dirInfo.Name, dirInfo.Name, 1, 1);
+                    secondNode.Nodes.Add(dirInfo.Name, dirInfo.Name, 1, 1);
                 }
 
-                treeViewFileExplorer.Nodes.Add(node);
             }
 
             foreach (string expandedNodeName in expandedNodes)
@@ -265,16 +274,27 @@ namespace CourseWork_2
         private void treeViewFileExplorer_AfterSelect(object sender, TreeViewEventArgs e)
         {
             string selectedDirectoryPath = null;
+            if(e.Node.Name == "")
+            {
+                ShowLogicalDrives();
+                return;
+            }
             try
             {
-                if (treeViewFileExplorer.SelectedNode.Parent == null) selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\";
+                if (treeViewFileExplorer.SelectedNode.Parent.Parent == null) selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\";
                 else selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode);
                 ShowFiles(selectedDirectoryPath);
 
             }catch(Exception ex)
             {
                 MessageBox.Show("You don't have accef for it");
-                ShowFiles(Directory.GetParent(selectedDirectoryPath).FullName);
+                try
+                {
+                    ShowFiles(Directory.GetParent(selectedDirectoryPath).FullName);
+                }catch(Exception exe)
+                {
+                    MessageBox.Show(exe.Message);
+                }
             }
         }
 
@@ -289,16 +309,18 @@ namespace CourseWork_2
                     contextMenuStrip1.Items[0].Enabled = false;
                     contextMenuStrip1.Items[1].Enabled = false;
                     contextMenuStrip1.Items[2].Text = "Copy all";
-                    contextMenuStrip1.Items[3].Text = "Move all";
-                    contextMenuStrip1.Items[4].Text = "Delete all";
+                    contextMenuStrip1.Items[3].Text = "Copy all in";
+                    contextMenuStrip1.Items[4].Text = "Move all in";
+                    contextMenuStrip1.Items[5].Text = "Delete all";
                 }
                 else
                 {
                     contextMenuStrip1.Items[0].Enabled = true;
                     contextMenuStrip1.Items[1].Enabled = true;
                     contextMenuStrip1.Items[2].Text = "Copy";
-                    contextMenuStrip1.Items[3].Text = "Move";
-                    contextMenuStrip1.Items[4].Text = "Delete";
+                    contextMenuStrip1.Items[3].Text = "Copy in";
+                    contextMenuStrip1.Items[4].Text = "Move in";
+                    contextMenuStrip1.Items[5].Text = "Delete";
                 }
                 contextMenuStrip1.Show(MousePosition, ToolStripDropDownDirection.Right);
             }
@@ -590,14 +612,37 @@ namespace CourseWork_2
             fileExplorer_DoubleClick(sender, e);
         }
 
-        private void searchRichTextBox_TextChanged(object sender, EventArgs e)
+
+
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (searchRichTextBox.Text.IndexOf("🔎 ") == -1)
+            Buffer.Clear();
+            foreach(ListViewItem item in fileExplorer.SelectedItems)
             {
-                searchRichTextBox.Text = "🔎 ";
-                searchRichTextBox.Select(3, 0);
-                return;
+                Buffer.Add(item.SubItems[5].Text);
             }
+        }
+
+        private void treeViewFileExplorer_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if(e.Button == MouseButtons.Right && Buffer.Count > 0 && e.Node.Name != "")
+            {
+                treeViewFileExplorer.SelectedNode = e.Node;
+                contextMenuStrip2.Show(MousePosition, ToolStripDropDownDirection.Right);
+            }
+
+        }
+        private void pastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (string path in Buffer)
+            {
+                //MessageBox.Show(Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode);
+                string selectedDirectoryPath;
+                if (treeViewFileExplorer.SelectedNode.Parent.Parent == null) selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode) + "\\";
+                else selectedDirectoryPath = Service.GetFullPathForNode(treeViewFileExplorer.SelectedNode);
+                Business.CopyWithProgressBar(path, selectedDirectoryPath);
+            }
+            refresh();
         }
     }
 

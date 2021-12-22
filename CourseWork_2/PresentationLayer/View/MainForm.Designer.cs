@@ -50,6 +50,7 @@ namespace CourseWork_2
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,9 +68,12 @@ namespace CourseWork_2
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.pastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.contextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // fileExplorer
@@ -133,11 +137,12 @@ namespace CourseWork_2
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.renameToolStripMenuItem,
+            this.copyToolStripMenuItem1,
             this.copyToolStripMenuItem,
             this.cutToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(133, 124);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(133, 148);
             // 
             // openToolStripMenuItem
             // 
@@ -153,18 +158,25 @@ namespace CourseWork_2
             this.renameToolStripMenuItem.Text = "Rename";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // copyToolStripMenuItem1
+            // 
+            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(132, 24);
+            this.copyToolStripMenuItem1.Text = "Copy";
+            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
+            // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(132, 24);
-            this.copyToolStripMenuItem.Text = "Copy";
+            this.copyToolStripMenuItem.Text = "Copy in";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.Size = new System.Drawing.Size(132, 24);
-            this.cutToolStripMenuItem.Text = "Move";
+            this.cutToolStripMenuItem.Text = "Move in";
             this.cutToolStripMenuItem.Click += new System.EventHandler(this.moveToolStripMenuItem_Click);
             // 
             // deleteToolStripMenuItem
@@ -199,6 +211,7 @@ namespace CourseWork_2
             this.treeViewFileExplorer.TabIndex = 2;
             this.treeViewFileExplorer.AfterExpand += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterExpand);
             this.treeViewFileExplorer.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewFileExplorer_AfterSelect);
+            this.treeViewFileExplorer.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewFileExplorer_NodeMouseClick);
             // 
             // openFileDialog1
             // 
@@ -274,7 +287,6 @@ namespace CourseWork_2
             this.searchRichTextBox.Size = new System.Drawing.Size(245, 26);
             this.searchRichTextBox.TabIndex = 12;
             this.searchRichTextBox.Text = "";
-            this.searchRichTextBox.TextChanged += new System.EventHandler(this.searchRichTextBox_TextChanged);
             this.searchRichTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.searchRichTextBox_KeyUp);
             // 
             // refreshButton
@@ -335,6 +347,21 @@ namespace CourseWork_2
             this.label2.TabIndex = 15;
             this.label2.Text = "Operations";
             // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pastToolStripMenuItem});
+            this.contextMenuStrip2.Name = "contextMenuStrip2";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(105, 28);
+            // 
+            // pastToolStripMenuItem
+            // 
+            this.pastToolStripMenuItem.Name = "pastToolStripMenuItem";
+            this.pastToolStripMenuItem.Size = new System.Drawing.Size(104, 24);
+            this.pastToolStripMenuItem.Text = "Past";
+            this.pastToolStripMenuItem.Click += new System.EventHandler(this.pastToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -355,6 +382,7 @@ namespace CourseWork_2
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.contextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -388,6 +416,9 @@ namespace CourseWork_2
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem pastToolStripMenuItem;
     }
 }
 
